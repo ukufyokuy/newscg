@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<link rel="stylesheet" href="/tmp/claude-0/-home-user-newscg/adcc64b6-9a7a-578f-bad4-eded799575c6/scratchpad/fonts/package/500.css">
+<link rel="stylesheet" href="/tmp/claude-0/-home-user-newscg/adcc64b6-9a7a-578f-bad4-eded799575c6/scratchpad/fonts/package/700.css">
+<link rel="stylesheet" href="/tmp/claude-0/-home-user-newscg/adcc64b6-9a7a-578f-bad4-eded799575c6/scratchpad/fonts/package/900.css">
+<style>
+  html,body{margin:0;padding:0}
+  body{width:1920px;height:1080px;overflow:hidden;font-family:'Noto Sans TC',sans-serif;background:#13294a}
+  #stage{position:relative;width:1920px;height:1080px}
+  svg{position:absolute;left:0;top:0}
+  .t{position:absolute;color:#f6efe6;white-space:nowrap}
+</style></head><body><div id="stage">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e2140"/><stop offset=".55" stop-color="#1c3a63"/><stop offset="1" stop-color="#2a4a73"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".72" cy=".42" r=".55">
+      <stop offset="0" stop-color="#ff9a6b" stop-opacity=".22"/><stop offset="1" stop-color="#ff9a6b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="barA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e3d6c3"/><stop offset="1" stop-color="#b9a688"/>
+    </linearGradient>
+    <linearGradient id="barB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8a5c"/><stop offset="1" stop-color="#e2533b"/>
+    </linearGradient>
+    <linearGradient id="cityGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a3254"/><stop offset="1" stop-color="#0c1b33"/>
+    </linearGradient>
+    <linearGradient id="cityTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1a31" stop-opacity=".9"/><stop offset="1" stop-color="#0b1a31" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffd27a"/>
+    </marker>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+  <!-- 上方延伸：倒掛的高樓輪廓（帶出「高房價」都市感），漸隱進主畫面 -->
+  <rect width="1920" height="216" fill="url(#cityTop)" opacity=".45"/>
+  <g id="towers"></g>
+  <!-- 下方延伸：城市天際線（住宅大樓） -->
+  <g id="city"></g>
+  <!-- 圖表 -->
+  <g id="chart"></g>
+  <!-- 小插圖 -->
+  <g id="icons" fill="none" stroke="#f6efe6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></g>
+</svg>
+<div class="t c" id="title1" style="left:200px;top:236px;font-size:52px;font-weight:700;letter-spacing:2px">台灣35到39歲人口</div>
+<div class="t c" id="title2" style="left:196px;top:300px;font-size:124px;font-weight:900;color:#ffb48f;letter-spacing:6px;line-height:1.15">未婚比例</div>
+<div class="t c" id="cap1" style="left:200px;top:690px;font-size:30px;font-weight:500;color:#e9dccb;line-height:1.45">結婚率大幅下降<br>也是生育率低迷的重要前導因素</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+function el(p,tag,a){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function txt(p,s,a){const e=el(p,'text',Object.assign({'font-family':'Noto Sans TC'},a));e.textContent=s;return e}
+
+// ---- 下方天際線（固定亂數，可重現）----
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+const city=document.getElementById('city');
+el(city,'rect',{x:0,y:960,width:1920,height:120,fill:'#0b1830'});
+for(let layer=0;layer<2;layer++){
+  let x=-20;
+  while(x<1940){
+    const w=60+rnd()*90, h=(layer?110:140)+rnd()*(layer?80:110);
+    const top=1080-h-(layer?0:30);
+    const b=el(city,'g',{});
+    el(b,'rect',{x,y:top,width:w,height:h+40,fill:layer?'#0f2342':'#1a3254',opacity:layer?1:.8});
+    // 窗格燈光
+    for(let wy=top+16;wy<1060;wy+=26)for(let wx=x+10;wx<x+w-14;wx+=20){
+      if(rnd()<(layer?.22:.12)) el(b,'rect',{x:wx,y:wy,width:9,height:12,fill:'#ffcf8a',opacity:layer?.55:.3});
+    }
+    x+=w+(layer?4:10);
+  }
+}
+// ---- 兩側高樓：從天際線一路延伸到畫面頂端（安全框外）----
+const tw=document.getElementById('towers');
+seed=99;
+[[18,150],[1752,150]].forEach(([x,w],i)=>{
+  const top=i?40:70;
+  el(tw,'rect',{x,y:top,width:w,height:1080-top,fill:'#11264a'});
+  el(tw,'rect',{x:x+(i?0:w-6),y:top,width:6,height:1080-top,fill:'#2d4d7a',opacity:.6});
+  el(tw,'rect',{x:x+w*.35,y:top-26,width:w*.3,height:26,fill:'#11264a'});
+  for(let wy=top+20;wy<1060;wy+=30)for(let wx=x+16;wx<x+w-20;wx+=26)
+    if(rnd()<.18) el(tw,'rect',{x:wx,y:wy,width:11,height:14,fill:'#ffcf8a',opacity:.4});
+});
+// ---- 圖表：高度與數值成正比 ----
+const chart=document.getElementById('chart');
+const BASE=712, HMAX=330, VMAX=41.4, BW=176;
+const data=[{y:'1975年',v:5.3,cx:1080,fill:'url(#barA)',lab:'#efe4d4',fs:64},
+            {y:'2024年',v:41.4,cx:1530,fill:'url(#barB)',lab:'#ffb48f',fs:96}];
+el(chart,'line',{x1:960,y1:BASE,x2:1700,y2:BASE,stroke:'#9fb3cf','stroke-width':3,opacity:.7});
+const tops=[];
+data.forEach(d=>{
+  const h=HMAX*d.v/VMAX, top=BASE-h; tops.push(top);
+  el(chart,'rect',{x:d.cx-BW/2,y:top,width:BW,height:h,rx:10,fill:d.fill,class:'c'});
+  el(chart,'rect',{x:d.cx-BW/2,y:BASE-10,width:BW,height:10,fill:d.fill});
+  const num=d.v.toFixed(1);
+  const t=txt(chart,'',{x:d.cx+8,y:top-18,'text-anchor':'middle',fill:d.lab,'font-weight':900,'font-size':d.fs,class:'c'});
+  t.textContent=num;
+  const u=el(t,'tspan',{'font-size':d.fs*0.45,dx:4});u.textContent='%';
+  txt(chart,d.y,{x:d.cx,y:BASE+48,'text-anchor':'middle',fill:'#f6efe6','font-weight':700,'font-size':36,class:'c'});
+});
+// 上升箭頭＋倍數徽章
+el(chart,'path',{d:`M ${1080+BW/2+14} ${tops[0]-6} C 1260 ${tops[0]-40}, 1300 ${tops[1]+150}, ${1530-BW/2-20} ${tops[1]+40}`,
+  fill:'none',stroke:'#ffd27a','stroke-width':7,'stroke-dasharray':'2 16','stroke-linecap':'round','marker-end':'url(#ah)'});
+const bg=el(chart,'g',{class:'c',transform:'translate(1292,520)'});
+el(bg,'rect',{x:-150,y:-56,width:300,height:108,rx:54,fill:'#ffd27a'});
+const bt=txt(bg,'',{x:0,y:24,'text-anchor':'middle',fill:'#13294a','font-weight':900,'font-size':40});
+const s1=el(bt,'tspan',{});s1.textContent='提高將近';
+const s2=el(bt,'tspan',{'font-size':64,dx:2});s2.textContent='8';
+const s3=el(bt,'tspan',{dx:2});s3.textContent='倍';
+
+// ---- 小插圖（自繪線條圖示）：高房價、低薪資 → 不敢結婚 → 生育率低迷 ----
+const ic=document.getElementById('icons');
+function label(x,s){txt(document.getElementById('chart'),s,{x,y:658,'text-anchor':'middle',fill:'#e9dccb','font-weight':700,'font-size':28,class:'c'})}
+const IY=548; // 圖示中心
+// 房子＋價格標籤
+let g=el(ic,'g',{transform:`translate(256,${IY})`});
+el(g,'path',{d:'M-46,4 L0,-40 L46,4 M-34,-6 V44 H34 V-6'});
+el(g,'path',{d:'M-10,44 V18 H10 V44'});
+el(g,'path',{d:'M28,-30 l18,-18 h22 v22 l-18,18 z',stroke:'#ff8a5c'});
+el(g,'circle',{cx:58,cy:-38,r:3,fill:'#ff8a5c',stroke:'none'});
+label(256,'高房價');
+// 錢包＋扁平的錢
+g=el(ic,'g',{transform:`translate(410,${IY})`});
+el(g,'rect',{x:-46,y:-26,width:92,height:66,rx:10});
+el(g,'path',{d:'M-46,-10 H46'});
+el(g,'rect',{x:16,y:2,width:30,height:22,rx:6,stroke:'#ff8a5c'});
+el(g,'path',{d:'M-30,-26 L10,-44 L22,-26',stroke:'#ff8a5c'});
+label(410,'低薪資');
+// 箭頭
+el(ic,'path',{d:`M480,${IY} H520 m-14,-14 l14,14 l-14,14`,stroke:'#ffd27a'});
+// 婚戒（打問號的猶豫感：戒指分開）
+g=el(ic,'g',{transform:`translate(596,${IY+6})`});
+el(g,'circle',{cx:-20,cy:6,r:28});
+el(g,'circle',{cx:26,cy:6,r:28,stroke:'#ff8a5c'});
+el(g,'path',{d:'M-20,-22 l-10,-14 h20 z',fill:'#f6efe6'});
+label(596,'不敢結婚');
+// 箭頭
+el(ic,'path',{d:`M668,${IY} H708 m-14,-14 l14,14 l-14,14`,stroke:'#ffd27a'});
+// 嬰兒車
+g=el(ic,'g',{transform:`translate(786,${IY})`});
+el(g,'path',{d:'M-44,-6 H34 A40,40 0 0 1 -44,-6 Z'});
+el(g,'path',{d:'M-4,-6 V-44 A40,40 0 0 1 36,-6',stroke:'#ff8a5c'});
+el(g,'path',{d:'M34,-6 L50,-34 H60'});
+el(g,'circle',{cx:-26,cy:40,r:9});el(g,'circle',{cx:22,cy:40,r:9});
+label(786,'生育率低迷');
+</script>
+</body></html>
