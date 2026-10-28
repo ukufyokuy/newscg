@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/500.css">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/700.css">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/900.css">
+<style>
+  html,body{margin:0;padding:0}
+  body{width:1920px;height:1080px;overflow:hidden;font-family:'Noto Sans TC',sans-serif;background:#171a33}
+  #stage{position:relative;width:1920px;height:1080px}
+  svg{position:absolute;left:0;top:0}
+  .t{position:absolute;color:#f7f1ea;white-space:nowrap}
+</style></head><body><div id="stage">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141831"/><stop offset=".5" stop-color="#29233f"/><stop offset="1" stop-color="#3a2b42"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".6">
+      <stop offset="0" stop-color="#ffb36b" stop-opacity=".16"/><stop offset="1" stop-color="#ffb36b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="moon" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffe6b8" stop-opacity=".9"/><stop offset=".25" stop-color="#ffe6b8" stop-opacity=".35"/><stop offset="1" stop-color="#ffe6b8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="coral" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff6f55"/><stop offset="1" stop-color="#ff9a64"/></linearGradient>
+    <linearGradient id="sand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c9b398"/><stop offset="1" stop-color="#e6d3b9"/></linearGradient>
+    <linearGradient id="coralV" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e5533f"/><stop offset="1" stop-color="#ff8e5f"/></linearGradient>
+    <linearGradient id="greyV" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#8f7f97"/><stop offset="1" stop-color="#bcaebf"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffb93f"/><stop offset="1" stop-color="#ffd772"/></linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+  <g id="topbg"></g>
+  <g id="city"></g>
+  <g id="cards"></g>
+  <g id="chart"></g>
+</svg>
+<div class="t c" id="tag" style="left:192px;top:222px;height:48px;line-height:48px;padding:0 22px;border-radius:24px;background:#ffc65c;color:#1b1a33;font-size:30px;font-weight:900">2026年第3季</div>
+<div class="t c" id="h1" style="left:228px;top:300px;font-size:54px;font-weight:900">第4季房價走勢</div>
+<div class="t c" id="h2" style="left:1020px;top:300px;font-size:54px;font-weight:900">兩年內適合購屋</div>
+<div class="t c" id="src" style="left:196px;top:744px;font-size:23px;line-height:34px;font-weight:500;color:#cbbfd0">資料來源：中信房屋</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+function el(p,tag,a){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function txt(p,s,a){const e=el(p,'text',Object.assign({'font-family':'Noto Sans TC'},a));e.textContent=s;return e}
+const vis=(e,on)=>{e.style.visibility=on?'visible':'hidden'};
+let seed=11;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+
+// ===== 背景：上方夜空（月光、雲帶），下方住宅區天際線＋施工吊車 =====
+const tb=document.getElementById('topbg');
+el(tb,'circle',{cx:1830,cy:110,r:150,fill:'url(#moon)'});
+el(tb,'circle',{cx:1830,cy:110,r:34,fill:'#ffe9c2',opacity:.85});
+[[260,90,520,26,.07],[900,150,700,30,.05],[1500,60,460,22,.06],[620,40,380,18,.05]].forEach(([cx,cy,rx,ry,o])=>
+  el(tb,'ellipse',{cx,cy,rx,ry,fill:'#c9b6d8',opacity:o}));
+const city=document.getElementById('city');
+el(city,'rect',{x:0,y:1000,width:1920,height:80,fill:'#120f22'});
+for(let layer=0;layer<2;layer++){
+  let x=-30;
+  while(x<1950){
+    const w=70+rnd()*110, h=(layer?100:130)+rnd()*(layer?80:100);
+    const top=1080-h-(layer?0:24), col=layer?'#1b1630':'#2a2240';
+    const g=el(city,'g',{opacity:layer?1:.85});
+    el(g,'rect',{x,y:top,width:w,height:h+30,fill:col});
+    if(rnd()<.45) el(g,'path',{d:`M${x-6},${top} L${x+w/2},${top-w*.32} L${x+w+6},${top} Z`,fill:col}); // 斜屋頂
+    for(let wy=top+18;wy<1065;wy+=28)for(let wx=x+12;wx<x+w-16;wx+=22)
+      if(rnd()<(layer?.24:.12)) el(g,'rect',{x:wx,y:wy,width:10,height:13,fill:'#ffd08a',opacity:layer?.6:.32});
+    x+=w+(layer?6:12);
+  }
+}
+// 施工吊車（右下，背景）
+const cr=el(city,'g',{stroke:'#3a3052','stroke-width':6,fill:'none',opacity:.9});
+el(cr,'path',{d:'M1640,1080 V800 M1676,1080 V800 M1640,800 H1676 M1640,840 L1676,880 M1676,840 L1640,880 M1640,920 L1676,960 M1676,920 L1640,960'});
+el(cr,'path',{d:'M1500,800 H1880 M1658,800 L1658,770 M1520,800 L1658,770 L1860,800'});
+el(cr,'path',{d:'M1540,800 V870',stroke:'#4a3e66','stroke-width':3});
+el(cr,'rect',{x:1528,y:870,width:24,height:18,fill:'#3a3052',stroke:'none'});
+
+// ===== 卡片 =====
+const cards=document.getElementById('cards');
+const CY0=284, CY1=740;
+function card(x0,x1){const g=el(cards,'g',{});
+  el(g,'rect',{x:x0,y:CY0,width:x1-x0,height:CY1-CY0,rx:24,fill:'#ffffff',opacity:.06,class:'c'});
+  el(g,'rect',{x:x0,y:CY0,width:x1-x0,height:CY1-CY0,rx:24,fill:'none',stroke:'#ffffff','stroke-opacity':.14,'stroke-width':2});
+  return g;}
+const cardL=card(192,936), cardR=card(984,1728);
+
+const chart=document.getElementById('chart');
+// ===== 插圖 =====
+function iconG(cx,cy){const o=el(chart,'g',{transform:`translate(${cx},${cy})`});const g=el(o,'g',{fill:'none',stroke:'#f7f1ea','stroke-width':6,'stroke-linecap':'round','stroke-linejoin':'round'});return g}
+const icL=iconG(866,348); // 房子＋上揚折線
+el(icL,'path',{d:'M-40,6 L-6,-26 L28,6 M-30,-2 V36 H18 V-2'});
+el(icL,'path',{d:'M-14,36 V16 H2 V36'});
+el(icL,'path',{d:'M8,24 L26,4 L36,14 L56,-12',stroke:'#ffc65c'});
+el(icL,'path',{d:'M42,-12 H56 V2',stroke:'#ffc65c'});
+const icR=iconG(1660,350); // 鑰匙＋房子吊牌
+el(icR,'circle',{cx:-22,cy:-8,r:20});
+el(icR,'path',{d:'M-8,6 L28,42 M14,28 L24,18 M22,36 L30,28'});
+el(icR,'path',{d:'M14,-30 L34,-46 L54,-30 V-6 H14 Z',stroke:'#ffc65c'});
+el(icR,'path',{d:'M-22,-28 Q-4,-48 14,-24',stroke:'#ffc65c','stroke-width':3});
+
+// ===== 左卡：第4季房價走勢（橫條，0–100% 刻度）=====
+const TX=400, TW=400;
+function hrow(cy,label,v,fill,col){
+  const r={cy,v,col};
+  r.lab=txt(chart,label,{x:228,y:cy+12,fill:'#f7f1ea','font-weight':700,'font-size':34,class:'c'});
+    r.bar=el(chart,'rect',{x:TX,y:cy-28,width:0,height:56,rx:10,fill,class:'c'});
+  r.num=txt(chart,'',{x:TX,y:cy+20,fill:col,'font-weight':900,'font-size':60,class:'c'});
+  r.main=el(r.num,'tspan',{});const p=el(r.num,'tspan',{'font-size':28,dx:3});p.textContent='%';
+  return r;
+}
+const rowUp=hrow(470,'預期上揚',28.1,'url(#coral)','#ff9a72');
+const rowFlat=hrow(640,'保持持平',64.1,'url(#sand)','#efdcc2');
+// 前一季 26.4% 刻度
+const prevX=TX+TW*26.4/100;
+const tick=el(chart,'g',{});
+el(tick,'line',{x1:prevX,y1:432,x2:prevX,y2:508,stroke:'#ffd772','stroke-width':4,'stroke-dasharray':'6 6'});
+const tickLab=txt(tick,'前一季26.4%',{x:prevX,y:422,'text-anchor':'middle',fill:'#ffd772','font-weight':700,'font-size':26,class:'c'});
+// 增加1.7個百分點 徽章
+const bL=el(chart,'g',{class:'c'});const bLi=el(bL,'g',{});
+el(bLi,'rect',{x:-150,y:-26,width:300,height:52,rx:26,fill:'#ffc65c'});
+const bLt=txt(bLi,'',{x:0,y:11,'text-anchor':'middle',fill:'#1b1a33','font-weight':900,'font-size':30});
+el(bLt,'tspan',{}).textContent='增加';el(bLt,'tspan',{'font-size':38,dx:2}).textContent='1.7';el(bLt,'tspan',{dx:2}).textContent='個百分點';
+const bLx=TX+150, bLy=548;
+
+// ===== 右卡：兩年內適合購屋（直條）=====
+const BASE=690, PX=4.6, BW=130;
+const vA={cx:1110,v:40.1,lab:'前一季'}, vB={cx:1290,v:49.8,lab:'本季'};
+const axis=el(chart,'line',{x1:1020,y1:BASE,x2:1020,y2:BASE,stroke:'#cbbfd0','stroke-width':3,opacity:.6});
+[vA,vB].forEach(d=>{
+  d.rect=el(chart,'rect',{x:d.cx-BW/2,y:BASE,width:BW,height:0,rx:8,fill:d===vA?'url(#greyV)':'url(#coralV)',class:'c'});
+  d.num=txt(chart,'',{x:d.cx+6,y:BASE,'text-anchor':'middle',fill:d===vA?'#d9cddc':'#ff9a72','font-weight':900,'font-size':d===vA?50:60,class:'c'});
+  d.main=el(d.num,'tspan',{});const p=el(d.num,'tspan',{'font-size':d===vA?24:28,dx:3});p.textContent='%';
+  d.yl=el(chart,'g',{});txt(d.yl,d.lab,{x:0,y:0,'text-anchor':'middle',fill:'#f7f1ea','font-weight':700,'font-size':28,class:'c'});
+});
+vB.gold=el(chart,'rect',{x:vB.cx-BW/2,y:BASE,width:BW,height:0,fill:'url(#gold)',class:'c'});
+const topA=BASE-PX*40.1, topB=BASE-PX*49.8;
+const dash=el(chart,'line',{x1:vA.cx+BW/2,y1:topA,x2:vA.cx+BW/2,y2:topA,stroke:'#ffd772','stroke-width':3,'stroke-dasharray':'8 8'});
+const brk=el(chart,'path',{d:`M${vB.cx+BW/2+14},${topB} h14 V${topA} h-14 M${vB.cx+BW/2+28},${(topA+topB)/2} H1428`,fill:'none',stroke:'#ffd772','stroke-width':4,'stroke-linecap':'round','stroke-linejoin':'round'});
+const bR=el(chart,'g',{class:'c'});const bRi=el(bR,'g',{});
+el(bRi,'rect',{x:-130,y:-62,width:260,height:124,rx:28,fill:'#ffc65c'});
+txt(bRi,'增加',{x:0,y:-18,'text-anchor':'middle',fill:'#1b1a33','font-weight':900,'font-size':30});
+const bRt=txt(bRi,'',{x:0,y:44,'text-anchor':'middle',fill:'#1b1a33','font-weight':900,'font-size':62});
+el(bRt,'tspan',{}).textContent='9.7';el(bRt,'tspan',{'font-size':28,dx:4}).textContent='個百分點';
+const bRx=1558, bRy=(topA+topB)/2;
+
+// ===== 時間軸 =====
+const clamp=x=>Math.max(0,Math.min(1,x)), prog=(t,a,d)=>clamp((t-a)/d);
+const eOut=u=>1-Math.pow(1-u,3), eIO=u=>u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;
+const ePop=u=>{if(u<=0)return 0;if(u>=1)return 1;const c=1.4;return 1+(c+1)*Math.pow(u-1,3)+c*Math.pow(u-1,2)};
+const T={tag:.3,cardL:.6,h1:1.0,icL:1.4,row1:1.9,bar1:2.1,tick:3.5,bL:4.1,row2:4.9,bar2:5.1,
+         cardR:6.8,h2:7.2,icR:7.6,axis:8.1,barA:8.4,barB:9.7,dash:11.3,brk:11.7,bR:12.2,src:12.9,END:16.0};
+function wipe(id,t,a,d=.6){const u=eOut(prog(t,a,d)),e=document.getElementById(id);
+  e.style.clipPath=`inset(-20px ${100-u*100}% -20px -20px)`;e.style.transform=`translateX(${(1-u)*-30}px)`;vis(e,u>0)}
+function popAt(g,inner,x,y,t,a,d=.45){const s=ePop(prog(t,a,d));g.setAttribute('transform',`translate(${x},${y})`);
+  inner.setAttribute('transform',`scale(${Math.max(s,1e-4)})`);vis(g,s>0)}
+function unfold(g,t,a,yTop){const u=eOut(prog(t,a,.5));
+  g.setAttribute('transform',`translate(0,${yTop}) scale(1,${Math.max(u,1e-4)}) translate(0,${-yTop})`);vis(g,u>0)}
+function hbar(r,t,a,dur,labT){
+  const lu=eOut(prog(t,labT,.5));r.lab.style.clipPath=`inset(-20px ${100-lu*100}% -20px -20px)`;vis(r.lab,lu>0);
+  const k=eOut(prog(t,a,dur)), v=r.v*k, w=TW*v/100;
+  r.bar.setAttribute('width',w);vis(r.bar,w>0.5);
+  r.num.setAttribute('x',TX+w+14);const show=v>=0.05;vis(r.num,show);r.main.textContent=show?v.toFixed(1):'';
+}
+function vbar(d,t,a,dur){
+  const k=eOut(prog(t,a,dur)), v=d.v*k, h=PX*v, top=BASE-h;
+  d.rect.setAttribute('y',top);d.rect.setAttribute('height',h);vis(d.rect,h>0.5);
+  d.num.setAttribute('y',top-16);const show=v>=0.05;vis(d.num,show);d.main.textContent=show?v.toFixed(1):'';
+  const s=ePop(prog(t,a,.45));d.yl.setAttribute('transform',`translate(${d.cx},${BASE+38}) scale(${Math.max(s,1e-4)})`);vis(d.yl,s>0);
+  return v;
+}
+window.render=function(t){
+  wipe('tag',t,T.tag,.5);
+  unfold(cardL,t,T.cardL,CY0); unfold(cardR,t,T.cardR,CY0);
+  wipe('h1',t,T.h1); wipe('h2',t,T.h2);
+  [[icL,866,T.icL],[icR,1660,T.icR]].forEach(([g,x,a])=>{const s=ePop(prog(t,a,.45));g.parentNode.setAttribute('transform',`translate(${x},${x>1000?350:348}) scale(${Math.max(s,1e-4)})`);vis(g.parentNode,s>0)});
+  hbar(rowUp,t,T.bar1,1.2,T.row1); hbar(rowFlat,t,T.bar2,1.4,T.row2);
+  const tu=eOut(prog(t,T.tick,.4)); tick.style.clipPath=`inset(${(1-tu)*100}% -200px 0 -200px)`; vis(tick,tu>0);
+  popAt(bL,bLi,bLx,bLy,t,T.bL);
+  const ua=eIO(prog(t,T.axis,.5)); axis.setAttribute('x2',1020+380*ua); vis(axis,ua>0);
+  vbar(vA,t,T.barA,1.0);
+  const vb=vbar(vB,t,T.barB,1.4);
+  // 本季超過前一季的部分用金色
+  const gh=Math.max(0,PX*(vb-40.1)); vB.gold.setAttribute('y',BASE-PX*vb); vB.gold.setAttribute('height',gh); vis(vB.gold,gh>0.5);
+  const du=eIO(prog(t,T.dash,.4)); dash.setAttribute('x2',vA.cx+BW/2+(vB.cx+BW/2-vA.cx-BW/2)*du); vis(dash,du>0);
+  const bu=eOut(prog(t,T.brk,.4)); brk.style.clipPath=`inset(-10px ${100-bu*100}% -10px -10px)`; vis(brk,bu>0);
+  popAt(bR,bRi,bRx,bRy,t,T.bR,.5);
+  wipe('src',t,T.src,.5);
+};
+window.DURATION=T.END;
+render(DURATION);
+</script>
+</body></html>

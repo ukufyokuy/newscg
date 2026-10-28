@@ -7,7 +7,7 @@ const {chromium}=require('playwright');
     const SAFE={x0:192,x1:1728,y0:216,y1:780};const bad=[];
     document.querySelectorAll('.c').forEach(e=>{const b=e.getBoundingClientRect();
       if(b.left<SAFE.x0||b.right>SAFE.x1||b.top<SAFE.y0||b.bottom>SAFE.y1)bad.push([e.textContent||e.tagName,Math.round(b.left),Math.round(b.top),Math.round(b.right),Math.round(b.bottom)])});
-    const ic=document.getElementById('icons').getBBox();
+    const ie=document.getElementById('icons'), ic=ie?ie.getBBox():{x:0,y:0,width:0,height:0};
     const fonts=[...document.fonts].filter(f=>f.status==='loaded').length;
     return {bad,icons:[ic.x,ic.y,ic.x+ic.width,ic.y+ic.height].map(Math.round),fonts,text:[...document.querySelectorAll('.t,text')].map(e=>e.textContent)};
   });
