@@ -8,7 +8,7 @@ const {chromium}=require('playwright');
   for(const n of list){
     const t=(n-1)/FPS;
     await p.evaluate(t=>render(t),t);
-    await p.screenshot({path:`${outdir}/${String(n).padStart(4,'0')}.png`});
+    await p.screenshot({path:`${outdir}/${String(n).padStart(4,'0')}.png`,omitBackground:!!process.env.ALPHA});
   }
   // 最後一格的出界檢查
   await p.evaluate(t=>render(t),dur);

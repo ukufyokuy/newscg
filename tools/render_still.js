@@ -12,5 +12,5 @@ const {chromium}=require('playwright');
     return {bad,icons:[ic.x,ic.y,ic.x+ic.width,ic.y+ic.height].map(Math.round),fonts,text:[...document.querySelectorAll('.t,text')].map(e=>e.textContent)};
   });
   console.log(JSON.stringify(r,null,1));
-  await p.screenshot({path:out});await b.close();
+  await p.screenshot({path:out,omitBackground:!!process.env.ALPHA});await b.close();
 })();

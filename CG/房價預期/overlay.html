@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/500.css">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/700.css">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/900.css">
+<style>
+  html,body{margin:0;padding:0;background:transparent}
+  body{width:1920px;height:1080px;overflow:hidden;font-family:'Noto Sans TC',sans-serif}
+  #stage{position:relative;width:1920px;height:1080px}
+  svg{position:absolute;left:0;top:0}
+  .t{position:absolute;color:#f7f1ea;white-space:nowrap}
+</style></head><body><div id="stage">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1a36"/><stop offset="1" stop-color="#2c2140"/></linearGradient>
+    <linearGradient id="coral" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff6f55"/><stop offset="1" stop-color="#ff9a64"/></linearGradient>
+    <linearGradient id="sand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c9b398"/><stop offset="1" stop-color="#e6d3b9"/></linearGradient>
+    <linearGradient id="grey" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8f7f97"/><stop offset="1" stop-color="#bcaebf"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb93f"/><stop offset="1" stop-color="#ffd772"/></linearGradient>
+    <clipPath id="panelClip"><rect id="clipRect" x="1040" y="216" width="688" height="556" rx="22"/></clipPath>
+  </defs>
+  <g id="panelG">
+    <rect x="1040" y="216" width="688" height="556" rx="22" fill="url(#panel)" opacity=".9" class="c"/>
+    <rect x="1040" y="216" width="688" height="556" rx="22" fill="none" stroke="#ffffff" stroke-opacity=".16" stroke-width="2"/>
+    <rect x="1040" y="246" width="8" height="496" rx="4" fill="#ffc65c"/>
+  </g>
+  <g id="chart" clip-path="url(#panelClip)"></g>
+</svg>
+<div class="t c" id="h1" style="left:1076px;top:234px;font-size:40px;font-weight:900">第4季房價走勢</div>
+<div class="t c" id="tag" style="left:1528px;top:240px;height:38px;line-height:38px;padding:0 16px;border-radius:19px;background:#ffc65c;color:#1b1a33;font-size:24px;font-weight:900">2026年第3季</div>
+<div class="t c" id="h2" style="left:1076px;top:484px;font-size:40px;font-weight:900">兩年內適合購屋</div>
+<div class="t c" id="src" style="left:1076px;top:726px;font-size:22px;font-weight:500;color:#cbbfd0;line-height:32px">資料來源：中信房屋</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+function el(p,tag,a){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function txt(p,s,a){const e=el(p,'text',Object.assign({'font-family':'Noto Sans TC'},a));e.textContent=s;return e}
+const vis=(e,on)=>{e.style.visibility=on?'visible':'hidden'};
+const chart=document.getElementById('chart');
+const TX=1220, TW=300; // 橫條起點、100% 長度
+function row(cy,label,v,fill,col){
+  const r={cy,v};
+  r.lab=txt(chart,label,{x:1076,y:cy+11,fill:'#f7f1ea','font-weight':700,'font-size':30,class:'c'});
+  r.bar=el(chart,'rect',{x:TX,y:cy-22,width:0,height:44,rx:8,fill,class:'c'});
+  r.num=txt(chart,'',{x:TX,y:cy+17,fill:col,'font-weight':900,'font-size':48,class:'c'});
+  r.main=el(r.num,'tspan',{});el(r.num,'tspan',{'font-size':24,dx:3}).textContent='%';
+  return r;
+}
+const rUp=row(340,'預期上揚',28.1,'url(#coral)','#ff9a72');
+const rFlat=row(414,'保持持平',64.1,'url(#sand)','#efdcc2');
+const rA=row(582,'前一季',40.1,'url(#grey)','#d9cddc');
+const rB=row(652,'本季',49.8,'url(#coral)','#ff9a72');
+rB.gold=el(chart,'rect',{x:TX,y:652-22,width:0,height:44,fill:'url(#gold)',class:'c'});
+// 前一季 26.4% 標記
+const x264=TX+TW*.264;
+const tick=el(chart,'g',{});
+el(tick,'line',{x1:x264,y1:312,x2:x264,y2:368,stroke:'#ffd772','stroke-width':3,'stroke-dasharray':'5 5'});
+txt(tick,'前一季26.4%',{x:x264,y:306,'text-anchor':'middle',fill:'#ffd772','font-weight':700,'font-size':20,class:'c'});
+// 40.1% 對齊虛線（前一季→本季）
+const x401=TX+TW*.401;
+const dash=el(chart,'line',{x1:x401,y1:582+22,x2:x401,y2:582+22,stroke:'#ffd772','stroke-width':3,'stroke-dasharray':'5 5'});
+// 徽章
+function badge(cx,cy,w,h,build){const g=el(chart,'g',{class:'c'});const i=el(g,'g',{});
+  el(i,'rect',{x:-w/2,y:-h/2,width:w,height:h,rx:h/2>30?24:h/2,fill:'#ffc65c'});build(i);return {g,i,cx,cy}}
+const b1=badge(1608,340,200,44,i=>{const t=txt(i,'',{x:0,y:9,'text-anchor':'middle',fill:'#1b1a33','font-weight':900,'font-size':22});
+  el(t,'tspan',{}).textContent='增加';el(t,'tspan',{'font-size':28,dx:2}).textContent='1.7';el(t,'tspan',{dx:2}).textContent='個百分點';});
+const b2=badge(1624,617,176,100,i=>{
+  txt(i,'增加',{x:0,y:-14,'text-anchor':'middle',fill:'#1b1a33','font-weight':900,'font-size':24});
+  const t=txt(i,'',{x:0,y:34,'text-anchor':'middle',fill:'#1b1a33','font-weight':900,'font-size':44});
+  el(t,'tspan',{}).textContent='9.7';el(t,'tspan',{'font-size':22,dx:3}).textContent='個百分點';});
+const divider=el(chart,'line',{x1:1076,y1:466,x2:1076,y2:466,stroke:'#ffffff','stroke-opacity':.18,'stroke-width':2});
+
+// ===== 時間軸：與 配音稿.md（30 秒）相同 =====
+const clamp=x=>Math.max(0,Math.min(1,x)), prog=(t,a,d)=>clamp((t-a)/d);
+const eOut=u=>1-Math.pow(1-u,3), eIO=u=>u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;
+const ePop=u=>{if(u<=0)return 0;if(u>=1)return 1;const c=1.4;return 1+(c+1)*Math.pow(u-1,3)+c*Math.pow(u-1,2)};
+const T={panel:.3,src:1.0,tag:2.4,h1:4.2,
+         row1:5.8,bar1:5.95,dur1:1.6,tick:11.0,b1:12.9,row2:14.5,bar2:14.6,dur2:1.6,
+         div:18.1,h2:18.6,rowA:21.2,barA:21.9,durA:1.3,rowB:23.4,barB:23.6,durB:1.7,dash:25.35,b2:25.9,END:30.0};
+function wipe(e,t,a,d=.7){const u=eOut(prog(t,a,d));
+  e.style.clipPath=`inset(-20px ${100-u*100}% -20px -20px)`;e.style.transform=`translateX(${(1-u)*-24}px)`;vis(e,u>0)}
+function pop(b,t,a,d=.45){const s=ePop(prog(t,a,d));b.g.setAttribute('transform',`translate(${b.cx},${b.cy})`);
+  b.i.setAttribute('transform',`scale(${Math.max(s,1e-4)})`);vis(b.g,s>0)}
+function grow(r,t,labT,a,dur){
+  const lu=eOut(prog(t,labT,.5));r.lab.style.clipPath=`inset(-20px ${100-lu*100}% -20px -20px)`;vis(r.lab,lu>0);
+  const k=eOut(prog(t,a,dur)),v=r.v*k,w=TW*v/100;
+  r.bar.setAttribute('width',w);vis(r.bar,w>.5);
+  r.num.setAttribute('x',TX+w+12);const show=v>=.05;vis(r.num,show);r.main.textContent=show?v.toFixed(1):'';
+  return v;
+}
+const panelG=document.getElementById('panelG');
+window.render=function(t){
+  // 資料框由右側滑入（不淡入）
+  const pu=eOut(prog(t,T.panel,.6)), off=(1-pu)*(1920-1040);
+  panelG.setAttribute('transform',`translate(${off},0)`);vis(panelG,pu>0);
+  document.getElementById('clipRect').setAttribute('x',1040+off);
+  wipe(document.getElementById('src'),t,T.src,.5);
+  wipe(document.getElementById('tag'),t,T.tag,.5);
+  wipe(document.getElementById('h1'),t,T.h1); wipe(document.getElementById('h2'),t,T.h2);
+  grow(rUp,t,T.row1,T.bar1,T.dur1); grow(rFlat,t,T.row2,T.bar2,T.dur2);
+  const tu=eOut(prog(t,T.tick,.4)); tick.style.clipPath=`inset(${(1-tu)*100}% -200px 0 -200px)`; vis(tick,tu>0);
+  pop(b1,t,T.b1);
+  const du=eIO(prog(t,T.div,.5)); divider.setAttribute('x2',1076+616*du); vis(divider,du>0);
+  grow(rA,t,T.rowA,T.barA,T.durA);
+  const vb=grow(rB,t,T.rowB,T.barB,T.durB);
+  const gw=Math.max(0,TW*(vb-40.1)/100); rB.gold.setAttribute('x',x401); rB.gold.setAttribute('width',gw); vis(rB.gold,gw>.5);
+  const dd=eIO(prog(t,T.dash,.35)); dash.setAttribute('y2',604+(674-604)*dd); vis(dash,dd>0);
+  pop(b2,t,T.b2,.5);
+};
+window.DURATION=T.END;
+render(0);
+</script>
+</body></html>
