@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/500.css">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/700.css">
+<link rel="stylesheet" href="/tmp/newscg-fonts/package/900.css">
+<style>
+  html,body{margin:0;padding:0;background:transparent}
+  body{width:1920px;height:1080px;overflow:hidden;font-family:'Noto Sans TC',sans-serif}
+  #stage{position:relative;width:1920px;height:1080px}
+  svg{position:absolute;left:0;top:0}
+  .t{position:absolute;white-space:nowrap;color:#23324d;font-weight:900}
+  .num{color:#b3202c}
+  .u{font-size:.5em;margin-left:3px}
+</style></head><body><div id="stage">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b4a92"/><stop offset="1" stop-color="#1d3570"/></linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2333c"/><stop offset="1" stop-color="#bf1f2a"/></linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#eef0f4"/></linearGradient>
+    <pattern id="hex" width="56" height="48" patternUnits="userSpaceOnUse">
+      <path d="M14,0 H42 L56,24 L42,48 H14 L0,24 Z" fill="none" stroke="#ffffff" stroke-opacity=".10" stroke-width="2"/>
+    </pattern>
+    <linearGradient id="towerG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5f7da8"/><stop offset="1" stop-color="#8fb0d6"/></linearGradient>
+    <linearGradient id="goldH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd772"/><stop offset="1" stop-color="#ffb93f"/></linearGradient>
+  </defs>
+  <!-- 卡片 -->
+  <g id="bodyG">
+    <rect x="470" y="380" width="680" height="324" fill="url(#paper)" class="c"/>
+    <line id="div1" x1="500" y1="494" x2="1120" y2="494" stroke="#c9ced8" stroke-width="2"/>
+    <line id="div2" x1="500" y1="564" x2="1120" y2="564" stroke="#c9ced8" stroke-width="2"/>
+  </g>
+  <g id="titleG">
+    <rect x="470" y="316" width="680" height="68" rx="34" fill="url(#navy)" class="c"/>
+    <rect x="470" y="316" width="680" height="68" rx="34" fill="url(#hex)"/>
+  </g>
+  <g id="redG"><rect x="470" y="704" width="680" height="50" fill="url(#red)" class="c"/></g>
+  <g id="srcG"><rect x="470" y="754" width="680" height="26" fill="#1d3570" class="c"/></g>
+  <!-- 插圖（白色貼紙描邊） -->
+  <g id="illus" stroke-linejoin="round"></g>
+</svg>
+<div class="t c" id="title" style="left:510px;top:318px;font-size:46px;line-height:64px;color:#fff;letter-spacing:3px">第4季房價走勢</div>
+<div class="t c" id="tag" style="left:946px;top:332px;font-size:22px;line-height:36px;padding:0 14px;border-radius:18px;background:#ffc65c;color:#1d3570">2026年第3季</div>
+<div class="t c" id="l1" style="left:500px;top:398px;font-size:36px;line-height:52px">▸ 預期上揚</div>
+<div class="t c num" id="v1" style="left:900px;top:388px;width:220px;text-align:right;font-size:56px;line-height:64px"><span id="n1"></span><span class="u">%</span></div>
+<div class="t c" id="s1" style="left:530px;top:452px;font-size:24px;line-height:36px;color:#55627a;font-weight:700">比前一季26.4%增加1.7個百分點</div>
+<div class="t c" id="l2" style="left:500px;top:504px;font-size:36px;line-height:52px">▸ 保持持平</div>
+<div class="t c num" id="v2" style="left:900px;top:494px;width:220px;text-align:right;font-size:56px;line-height:64px"><span id="n2"></span><span class="u">%</span></div>
+<div class="t c" id="l3" style="left:500px;top:576px;font-size:36px;line-height:52px">▸ 兩年內適合購屋</div>
+<div class="t c" id="r3" style="left:530px;top:630px;font-size:30px;line-height:64px">
+  <span id="ra" style="color:#55627a">前一季 <span style="font-size:40px"><span id="na"></span><span class="u">%</span></span></span>
+  <span id="arr" style="color:#b3202c;margin:0 14px">➜</span>
+  <span id="rb" class="num" style="font-size:56px"><span id="nb"></span><span class="u">%</span></span>
+</div>
+<div class="t c" id="redTxt" style="left:470px;top:704px;width:680px;text-align:center;font-size:36px;line-height:50px;color:#fff">適合購屋比例 增加9.7個百分點</div>
+<div class="t c" id="src" style="left:490px;top:754px;font-size:18px;line-height:26px;color:#e4e9f5;font-weight:500">資料來源：中信房屋</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+function el(p,tag,a){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+const vis=(e,on)=>{e.style.visibility=on?'visible':'hidden'};
+const $=id=>document.getElementById(id);
+// ===== 插圖：舊公寓、新大樓、金色房子＋鑰匙、上揚箭頭（白色粗描邊＝貼紙感）=====
+const il=$('illus');
+function part(cx,cy){const o=el(il,'g',{transform:`translate(${cx},${cy})`});const g=el(o,'g',{});return {o,g,cx,cy}}
+const S={stroke:'#ffffff','stroke-width':12,'paint-order':'stroke'};
+// 舊公寓（左）
+const apt=part(600,318);
+el(apt.g,'rect',Object.assign({x:-62,y:-104,width:124,height:104,fill:'#e7d8c2'},S));
+el(apt.g,'rect',{x:-62,y:-112,width:124,height:12,fill:'#c97c5d'});
+for(let r=0;r<3;r++)for(let c=0;c<3;c++) el(apt.g,'rect',{x:-48+c*36,y:-92+r*30,width:22,height:18,fill:'#7f97b2'});
+el(apt.g,'rect',{x:-50,y:-22,width:100,height:6,fill:'#9a8a76'});
+// 新大樓（右）
+const tower=part(1030,318);
+el(tower.g,'rect',Object.assign({x:-56,y:-126,width:112,height:126,fill:'url(#towerG)'},S));
+for(let r=0;r<5;r++){el(tower.g,'rect',{x:-48,y:-116+r*24,width:96,height:14,fill:'#d6e6f5',opacity:.85});}
+el(tower.g,'rect',{x:-56,y:-132,width:112,height:8,fill:'#e7eef6'});
+// 金色房子＋鑰匙（中）
+const house=part(815,306);
+el(house.g,'path',Object.assign({d:'M-70,-40 L0,-100 L70,-40 V20 H-70 Z',fill:'url(#goldH)'},S));
+el(house.g,'rect',{x:-20,y:-24,width:40,height:44,rx:4,fill:'#c8862a'});
+el(house.g,'rect',{x:26,y:-36,width:26,height:22,rx:3,fill:'#fff6dc'});
+el(house.g,'rect',{x:-52,y:-36,width:26,height:22,rx:3,fill:'#fff6dc'});
+const key=part(892,264);
+el(key.g,'circle',Object.assign({cx:0,cy:0,r:20,fill:'#f2b632'},S));
+el(key.g,'circle',{cx:0,cy:0,r:8,fill:'#ffffff'});
+el(key.g,'path',Object.assign({d:'M14,14 L50,50 M34,34 L44,24 M42,42 L52,32',fill:'none',stroke:'#f2b632','stroke-width':9,'stroke-linecap':'round'}));
+// 上揚箭頭＋閃光
+const arrow=part(700,250);
+el(arrow.g,'path',{d:'M-40,30 L-10,0 L10,14 L44,-22',fill:'none',stroke:'#ffffff','stroke-width':20,'stroke-linecap':'round','stroke-linejoin':'round'});
+el(arrow.g,'path',{d:'M-40,30 L-10,0 L10,14 L44,-22',fill:'none',stroke:'#e2333c','stroke-width':10,'stroke-linecap':'round','stroke-linejoin':'round'});
+el(arrow.g,'path',Object.assign({d:'M26,-30 L52,-30 L52,-4 Z',fill:'#e2333c'},{stroke:'#ffffff','stroke-width':6,'paint-order':'stroke','stroke-linejoin':'round'}));
+const spark=part(960,236);
+const sp='M0,-18 Q3,-3 18,0 Q3,3 0,18 Q-3,3 -18,0 Q-3,-3 0,-18 Z';
+el(spark.g,'path',{d:sp,fill:'#ffd34d',stroke:'#fff','stroke-width':4,'paint-order':'stroke'});
+el(spark.g,'path',{d:sp,fill:'#ffd34d',transform:'translate(-200,40) scale(.7)',stroke:'#fff','stroke-width':4,'paint-order':'stroke'});
+const parts=[apt,tower,house,key,arrow,spark];
+
+// ===== 時間軸：與 配音稿.md（30 秒）相同 =====
+const clamp=x=>Math.max(0,Math.min(1,x)), prog=(t,a,d)=>clamp((t-a)/d);
+const eOut=u=>1-Math.pow(1-u,3);
+const ePop=u=>{if(u<=0)return 0;if(u>=1)return 1;const c=1.4;return 1+(c+1)*Math.pow(u-1,3)+c*Math.pow(u-1,2)};
+const T={titleBar:.3,body:.6,red:.9,src:1.0, apt:1.2,tower:1.4,house:1.6,key:1.9,arrow:2.1,spark:2.3,
+         tag:2.4,title:4.2, l1:5.8,v1:5.95,d1:1.6, s1:11.0,s1d:1.8, l2:14.5,v2:14.6,d2:1.6,
+         l3:18.6, na:21.9,da:1.3, arr:23.4, nb:23.6,db:1.7, redT:25.9, END:30.0};
+function wipe(e,t,a,d=.6){const u=eOut(prog(t,a,d));e.style.clipPath=`inset(-30px ${100-u*100}% -30px -30px)`;vis(e,u>0)}
+function count(span,box,t,a,d,v){const k=eOut(prog(t,a,d)),x=v*k,show=x>=.05;vis(box,show);span.textContent=show?x.toFixed(1):''}
+function popPart(p,t,a){const s=ePop(prog(t,a,.45));p.g.setAttribute('transform',`scale(${Math.max(s,1e-4)})`);vis(p.o,s>0)}
+window.render=function(t){
+  // 卡片：標題條由左刷出 → 白底往下展開 → 紅條、來源條刷出
+  const tb=eOut(prog(t,T.titleBar,.5)); $('titleG').style.clipPath=`inset(0 ${100-tb*100}% 0 0)`; vis($('titleG'),tb>0);
+  const bu=eOut(prog(t,T.body,.5)); $('bodyG').setAttribute('transform',`translate(0,380) scale(1,${Math.max(bu,1e-4)}) translate(0,-380)`); vis($('bodyG'),bu>0);
+  const ru=eOut(prog(t,T.red,.4)); $('redG').style.clipPath=`inset(0 ${100-ru*100}% 0 0)`; vis($('redG'),ru>0);
+  const su=eOut(prog(t,T.src,.4)); $('srcG').style.clipPath=`inset(0 ${100-su*100}% 0 0)`; vis($('srcG'),su>0);
+  wipe($('src'),t,T.src+.2,.4);
+  popPart(apt,t,T.apt);popPart(tower,t,T.tower);popPart(house,t,T.house);popPart(key,t,T.key);popPart(arrow,t,T.arrow);popPart(spark,t,T.spark);
+  const tg=ePop(prog(t,T.tag,.45)); $('tag').style.transform=`scale(${Math.max(tg,1e-4)})`; vis($('tag'),tg>0);
+  wipe($('title'),t,T.title,.7);
+  wipe($('l1'),t,T.l1,.5); count($('n1'),$('v1'),t,T.v1,T.d1,28.1);
+  wipe($('s1'),t,T.s1,T.s1d);
+  wipe($('l2'),t,T.l2,.5); count($('n2'),$('v2'),t,T.v2,T.d2,64.1);
+  wipe($('l3'),t,T.l3,.6);
+  count($('na'),$('ra'),t,T.na,T.da,40.1);
+  const au=ePop(prog(t,T.arr,.35)); $('arr').style.display='inline-block'; $('arr').style.transform=`scale(${Math.max(au,1e-4)})`; $('arr').style.visibility=au>0?'visible':'hidden';
+  count($('nb'),$('rb'),t,T.nb,T.db,49.8);
+  wipe($("redTxt"),t,T.redT,.6);
+};
+window.DURATION=T.END;
+render(0);
+</script>
+</body></html>
