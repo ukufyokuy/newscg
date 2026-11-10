@@ -1,0 +1,433 @@
+<meta charset="utf-8">
+<title>年輪與光</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500&family=Noto+Sans+TC:wght@400;500&display=swap">
+<style>
+/* Layout: full-bleed WebGL film, subtitle band at bottom, slim chapter rail on top. Single dark look (night sky + amber light). */
+:root {
+  --ink: #070a12;
+  --mist: #c9d2e3;
+  --dim: #7d879c;
+  --amber: #f2b66d;
+  --dawn: #9cc3ff;
+  --rail: rgba(201, 210, 227, 0.18);
+  --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--ink); color: var(--mist); overflow: hidden; font-family: var(--sans); }
+#stage { position: fixed; inset: 0; display: block; width: 100%; height: 100%; }
+
+.top {
+  position: fixed; left: 0; right: 0; top: 0; z-index: 2;
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 10px;
+  background: linear-gradient(to bottom, rgba(7,10,18,.7), rgba(7,10,18,0));
+  padding-bottom: 24px;
+}
+.rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.rail button {
+  all: unset; cursor: pointer; display: grid; gap: 6px; min-width: 0;
+  font-size: 12px; letter-spacing: .08em; color: var(--dim);
+}
+.rail button span.bar { display: block; height: 2px; background: var(--rail); position: relative; overflow: hidden; border-radius: 1px; }
+.rail button span.bar i { position: absolute; inset: 0; transform-origin: left; transform: scaleX(0); background: var(--amber); }
+.rail button.on { color: var(--mist); }
+.rail button:focus-visible { outline: 1px solid var(--amber); outline-offset: 4px; }
+.rail .lbl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.chap { font-family: var(--serif); font-size: 13px; letter-spacing: .2em; color: var(--amber); }
+#play {
+  all: unset; cursor: pointer; font-size: 12px; letter-spacing: .1em; color: var(--mist);
+  border: 1px solid var(--rail); padding: 5px 12px; border-radius: 999px;
+}
+#play:focus-visible { outline: 1px solid var(--amber); outline-offset: 3px; }
+
+.sub {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 2; text-align: center;
+  padding-bottom: calc(clamp(28px, 8vh, 72px) + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  pointer-events: none;
+}
+#line {
+  display: inline-block; max-width: 34em;
+  font-family: var(--serif); font-weight: 300; font-size: clamp(17px, 2.4vw, 26px);
+  line-height: 1.7; letter-spacing: .12em; color: var(--mist); text-wrap: balance;
+  text-shadow: 0 0 18px rgba(7,10,18,.9);
+}
+#line small { display: block; font-family: var(--sans); font-size: .55em; letter-spacing: .2em; color: var(--dim); margin-top: .4em; }
+
+#title {
+  position: fixed; inset: 0; z-index: 1; display: grid; place-items: start center; padding-top: 13vh; text-align: center;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  pointer-events: none; opacity: 0;
+}
+#title h1 {
+  margin: 0; font-family: var(--serif); font-weight: 500;
+  font-size: clamp(26px, 5vw, 56px); letter-spacing: .3em; color: #fff3e2;
+  text-shadow: 0 0 30px rgba(242,182,109,.55); text-wrap: balance;
+}
+#title p { margin: 1.2em 0 0; font-family: var(--serif); font-weight: 300; font-size: clamp(14px, 1.8vw, 19px); letter-spacing: .2em; color: var(--mist); text-wrap: balance; }
+
+body.capture .top { display: none; }
+</style>
+
+<canvas id="stage"></canvas>
+
+<div class="top">
+  <div class="row">
+    <div class="chap" id="chap">第一章 · 不是單向的衰退</div>
+    <button id="play" type="button">暫停</button>
+  </div>
+  <nav class="rail" id="rail" aria-label="章節"></nav>
+</div>
+
+<div id="title"><div><h1>年輪與光</h1><p>老去不是單向的衰退，是重新整理生命的過程</p></div></div>
+<div class="sub"><div id="line"></div></div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const T = 72;               // total length (s)
+const CH = [
+  { s: 0,  name: '第一章 · 不是單向的衰退' },
+  { s: 18, name: '第二章 · 重新理解自己' },
+  { s: 36, name: '第三章 · 重新整理生命' },
+  { s: 54, name: '第四章 · 學會調整心態' },
+];
+const LINES = [
+  [1, 5.5,  '我們常以為，老去是一條向下的線。'],
+  [6.5, 11, '但心理學看見的，是一條會轉彎的路。'],
+  [12, 17,  '衰退與成長，從來是同時發生的。'],
+  [19, 24.5,'外表會改變，像年輪一圈一圈留下時間。'],
+  [25.5, 30,'每一道痕跡，都是走過的證明。'],
+  [31, 35.5,'晚年的課題，是統整，而不是絕望。<small>Erikson · 自我統整 vs. 絕望</small>'],
+  [37, 42,  '一生累積了許多碎片。'],
+  [43, 47.5,'當時間變得有限，我們開始挑選。'],
+  [48.5, 53,'把心力留給真正重要的人與事。<small>Carstensen · 社會情緒選擇理論</small>'],
+  [55, 59.5,'放不下的，學著放下。'],
+  [60.5, 65,'放下的化成光，留下的長成枝葉。'],
+];
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const sm = (a, b, x) => { const k = clamp((x - a) / (b - a)); return k * k * (3 - 2 * k); };
+const win = (t, a, b, c, d) => sm(a, b, t) * (1 - sm(c, d, t));
+const rnd = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+
+const params = new URLSearchParams(location.search);
+const capture = params.has('capture');
+if (capture) document.body.classList.add('capture');
+
+// ---------- renderer ----------
+const canvas = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: capture });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x070a12);
+scene.fog = new THREE.FogExp2(0x070a12, 0.028);
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 1.05, 0.65, 0.08);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+function resize() {
+  const w = innerWidth, h = innerHeight;
+  renderer.setSize(w, h, false); composer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.fov = w < h ? 62 : 45;
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize); resize();
+
+// soft dot sprite
+const dot = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const g = c.getContext('2d'); const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.35, 'rgba(255,255,255,.55)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c);
+})();
+
+// ---------- stars ----------
+{
+  const n = 1800, p = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) {
+    const r = 40 + rnd() * 60, a = rnd() * Math.PI * 2, b = Math.acos(2 * rnd() - 1);
+    p.set([r * Math.sin(b) * Math.cos(a), r * Math.cos(b), r * Math.sin(b) * Math.sin(a)], i * 3);
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+  scene.add(new THREE.Points(g, new THREE.PointsMaterial({ size: 0.35, map: dot, color: 0x8fa3c8, transparent: true, opacity: .55, depthWrite: false, fog: false })));
+}
+
+// ---------- chapter 1: the line that turns ----------
+const CORE = new THREE.Vector3(0, 1, 0);
+const pts = [new THREE.Vector3(-9, 9, -4), new THREE.Vector3(-6, 5.5, -2), new THREE.Vector3(-3.6, 1.2, -0.6)];
+for (let i = 0; i <= 80; i++) {
+  const k = i / 80, a = Math.PI + k * Math.PI * 6, r = 2.7 - k * 2.3;
+  pts.push(new THREE.Vector3(r * Math.cos(a), -2.6 + k * 3.6, r * Math.sin(a)));
+}
+const curve = new THREE.CatmullRomCurve3(pts);
+const tubeMat = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  uniforms: { uProg: { value: 0 }, uOp: { value: 1 } },
+  vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+  fragmentShader: `uniform float uProg,uOp; varying vec2 vUv;
+    void main(){ if(vUv.x>uProg) discard;
+      vec3 cool=vec3(.35,.55,1.), warm=vec3(1.,.66,.32);
+      vec3 c=mix(cool,warm,smoothstep(.1,.9,vUv.x));
+      float head=exp(-pow((uProg-vUv.x)*60.,2.))*3.;
+      gl_FragColor=vec4(c*(.9+head),uOp); }`,
+});
+const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 700, 0.035, 8), tubeMat);
+scene.add(tube);
+const SAMP = curve.getSpacedPoints(999);
+const NF = 420, flowSeed = Array.from({ length: NF }, () => [rnd(), rnd() - .5, rnd() - .5, rnd() - .5, .6 + rnd() * .8]);
+const flowPos = new Float32Array(NF * 3);
+const flowGeo = new THREE.BufferGeometry(); flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos, 3));
+const flowMat = new THREE.PointsMaterial({ size: 0.13, map: dot, color: 0xffd9a6, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+scene.add(new THREE.Points(flowGeo, flowMat));
+
+// ---------- chapter 2: the self, with rings of time ----------
+const coreGroup = new THREE.Group(); coreGroup.position.copy(CORE); scene.add(coreGroup);
+const shellMat = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false,
+  uniforms: { uTime: { value: 0 }, uAge: { value: 0 }, uOp: { value: 0 }, uGlow: { value: 0 } },
+  vertexShader: `uniform float uTime,uAge; varying vec3 vN,vV; varying float vR;
+    void main(){ float a=atan(position.z,position.x);
+      float r=sin(position.y*22.+sin(a*3.+position.y*4.)*.9+uTime*.25);
+      vec3 p=position+normal*r*.018*uAge; vR=r;
+      vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(p,1.); vV=-mv.xyz;
+      gl_Position=projectionMatrix*mv; }`,
+  fragmentShader: `uniform float uAge,uOp,uGlow; varying vec3 vN,vV; varying float vR;
+    void main(){ float f=pow(1.-max(dot(normalize(vN),normalize(vV)),0.),2.2);
+      vec3 b=mix(vec3(.5,.7,1.),vec3(1.,.7,.42),uAge);
+      float ring=smoothstep(.82,1.,vR)*uAge;
+      vec3 c=b*.12+b*f*1.5+vec3(1.,.83,.58)*ring*.75;
+      gl_FragColor=vec4(c,uOp*(.35+f*.65+ring*.4)); }`,
+});
+const shell = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), shellMat);
+const heartMat = new THREE.MeshBasicMaterial({ color: 0xffc27a, transparent: true, opacity: 0 });
+const heart = new THREE.Mesh(new THREE.SphereGeometry(0.22, 32, 24), heartMat);
+coreGroup.add(heart, shell);
+
+// ---------- chapter 3: fragments of a life, sorted ----------
+const NFR = 420, KEEP = 14;
+const frag = new THREE.InstancedMesh(new THREE.OctahedronGeometry(0.11), new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }), NFR);
+frag.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+const fr = Array.from({ length: NFR }, (_, i) => {
+  const a = rnd() * Math.PI * 2, b = Math.acos(2 * rnd() - 1), r = 3.2 + rnd() * 5.5;
+  return { dir: new THREE.Vector3(Math.sin(b) * Math.cos(a), Math.cos(b) * .7, Math.sin(b) * Math.sin(a)), r, sp: .08 + rnd() * .18, rot: rnd() * 6, hue: rnd(), keep: i < KEEP };
+});
+frag.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(NFR * 3), 3);
+scene.add(frag);
+
+// ---------- chapter 4: the tree ----------
+const ROOT = new THREE.Vector3(0, -2.4, 0);
+const branches = [], tips = [];
+(function grow(start, dir, len, depth) {
+  const end = start.clone().addScaledVector(dir, len);
+  branches.push({ start, dir: dir.clone(), len, depth });
+  if (depth === 5) { tips.push(end); return; }
+  const kids = depth < 2 ? 3 : 2;
+  for (let k = 0; k < kids; k++) {
+    const a0 = (k / kids + rnd() * .2) * Math.PI * 2, ax = new THREE.Vector3(Math.cos(a0), 0, Math.sin(a0));
+    const nd = dir.clone().applyAxisAngle(ax, .55 + rnd() * .45).add(new THREE.Vector3(0, .05, 0)).normalize();
+    grow(end, nd, len * (.68 + rnd() * .12), depth + 1);
+  }
+})(ROOT.clone(), new THREE.Vector3(0, 1, 0), 1.9, 0);
+const cyl = new THREE.CylinderGeometry(.7, 1, 1, 7, 1); cyl.translate(0, .5, 0);
+const tree = new THREE.InstancedMesh(cyl, new THREE.MeshBasicMaterial({ color: 0x8a6440, transparent: true }), branches.length);
+tree.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+scene.add(tree);
+const LPER = 4, NL = tips.length * LPER;
+const leaves = Array.from({ length: NL }, (_, i) => ({
+  base: tips[Math.floor(i / LPER)].clone().add(new THREE.Vector3((rnd() - .5) * 1.1, (rnd() - .5) * .7, (rnd() - .5) * 1.1)),
+  fall: rnd() < .5, t0: 64 + rnd() * 3, ph: rnd() * 6, gold: rnd(),
+}));
+const leafPos = new Float32Array(NL * 3), leafCol = new Float32Array(NL * 3);
+const leafGeo = new THREE.BufferGeometry();
+leafGeo.setAttribute('position', new THREE.BufferAttribute(leafPos, 3));
+leafGeo.setAttribute('color', new THREE.BufferAttribute(leafCol, 3));
+const leafMat = new THREE.PointsMaterial({ size: .32, map: dot, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+scene.add(new THREE.Points(leafGeo, leafMat));
+
+// ---------- camera path ----------
+const KEYS = [
+  [0, [0, 1.5, 17], [0, 1, 0]], [8, [-7, 3.5, 12], [-1.5, 0.5, 0]], [15, [5, 2, 9], [0, 0, 0]],
+  [19, [0, 1.3, 5.6], [0, 1, 0]], [27, [3.6, 2, 4], [0, 1, 0]], [34, [-2.2, .6, 4.2], [0, 1, 0]],
+  [38, [0, 5, 13], [0, 1, 0]], [46, [8, 3, 9], [0, 1, 0]], [53, [3.5, 1.5, 7.5], [0, .5, 0]],
+  [57, [0, -.2, 12], [0, .3, 0]], [65, [-6, 2.2, 10.5], [0, .6, 0]], [72, [-7.5, 3, 12], [0, 1.2, 0]],
+];
+const camCurve = new THREE.CatmullRomCurve3(KEYS.map(k => new THREE.Vector3(...k[1])));
+const lookCurve = new THREE.CatmullRomCurve3(KEYS.map(k => new THREE.Vector3(...k[2])));
+function camAt(t) {
+  let i = 0; while (i < KEYS.length - 2 && t > KEYS[i + 1][0]) i++;
+  const k = clamp((t - KEYS[i][0]) / (KEYS[i + 1][0] - KEYS[i][0]));
+  const u = (i + k) / (KEYS.length - 1);
+  camera.position.copy(camCurve.getPoint(u));
+  camera.position.x += Math.sin(t * .7) * .06; camera.position.y += Math.sin(t * .53) * .05;
+  camera.lookAt(lookCurve.getPoint(u));
+}
+
+// ---------- update ----------
+const M = new THREE.Matrix4(), Q = new THREE.Quaternion(), V = new THREE.Vector3(), S = new THREE.Vector3(), C = new THREE.Color(), UP = new THREE.Vector3(0, 1, 0);
+const lineEl = document.getElementById('line'), titleEl = document.getElementById('title'), chapEl = document.getElementById('chap');
+let lastLine = -1;
+
+function update(t) {
+  camAt(t);
+
+  // ch1
+  const prog = sm(.5, 13, t);
+  tubeMat.uniforms.uProg.value = prog;
+  tubeMat.uniforms.uOp.value = 1 - sm(16, 21, t);
+  const conv = sm(13.5, 18.5, t);
+  for (let i = 0; i < NF; i++) {
+    const f = flowSeed[i];
+    const u = ((f[0] + t * .035 * f[4]) % 1) * prog;
+    const p = SAMP[Math.floor(u * 999)];
+    V.set(p.x + f[1] * .25, p.y + f[2] * .25, p.z + f[3] * .25).lerp(CORE, conv);
+    flowPos.set([V.x, V.y, V.z], i * 3);
+  }
+  flowGeo.attributes.position.needsUpdate = true;
+  flowMat.opacity = sm(.5, 2, t) * (1 - sm(18, 20, t));
+
+  // core (ch2 →)
+  const coreIn = sm(15.5, 19.5, t);
+  const sink = sm(52, 57.5, t);
+  coreGroup.position.lerpVectors(CORE, ROOT, sink);
+  coreGroup.scale.setScalar((.6 + .4 * coreIn) * (1 - .62 * sink));
+  coreGroup.rotation.y = t * .08;
+  shellMat.uniforms.uTime.value = t;
+  shellMat.uniforms.uAge.value = sm(19, 32, t);
+  shellMat.uniforms.uOp.value = coreIn * (1 - .55 * sink);
+  const glow = sm(26, 36, t);
+  heartMat.opacity = coreIn;
+  heart.scale.setScalar(.8 + glow * .9 + Math.sin(t * 2) * .04);
+  heartMat.color.setRGB(1, .62 + glow * .2, .35 + glow * .15).multiplyScalar(1 + glow * .5);
+
+  // ch3
+  const fIn = sm(35, 39, t) * (1 - sm(54, 58, t));
+  const pick = sm(42.5, 49, t), drift = sm(43, 52, t);
+  frag.visible = fIn > .001;
+  frag.material.opacity = fIn;
+  if (frag.visible) for (let i = 0; i < NFR; i++) {
+    const f = fr[i], ang = t * f.sp;
+    V.copy(f.dir).multiplyScalar(f.r).applyAxisAngle(UP, ang).add(CORE);
+    let b;
+    if (f.keep) {
+      const a = i / KEEP * Math.PI * 2 + t * .35;
+      S.set(Math.cos(a) * 2.1, CORE.y + Math.sin(a * 2 + i) * .55, Math.sin(a) * 2.1);
+      S.lerp(coreGroup.position, sink);
+      V.lerp(S, pick);
+      b = .7 + pick * 1.5;
+      C.setRGB(1, .72, .4).multiplyScalar(b);
+    } else {
+      V.sub(CORE).multiplyScalar(1 + drift * 1.8).add(CORE);
+      b = .55 * (1 - drift) + .02;
+      C.setHSL(.55 + f.hue * .12, .45, .6).multiplyScalar(b);
+    }
+    Q.setFromEuler(new THREE.Euler(t * .5 + f.rot, t * .3 + f.rot, 0));
+    M.compose(V, Q, S.setScalar(f.keep ? 1 + pick * .7 : 1));
+    frag.setMatrixAt(i, M); frag.setColorAt(i, C);
+  }
+  frag.instanceMatrix.needsUpdate = true; frag.instanceColor.needsUpdate = true;
+
+  // ch4
+  const g = clamp((t - 55.5) / 8);
+  tree.visible = g > 0;
+  for (let i = 0; i < branches.length; i++) {
+    const br = branches[i], k = sm(0, 1, (g - br.depth / 6) * 6);
+    Q.setFromUnitVectors(UP, br.dir);
+    const r = .13 * Math.pow(.62, br.depth) * (k > 0 ? 1 : 0);
+    M.compose(br.start, Q, S.set(r, Math.max(br.len * k, 1e-4), r));
+    tree.setMatrixAt(i, M);
+  }
+  tree.instanceMatrix.needsUpdate = true;
+  const lIn = sm(62, 64, t), golden = sm(63, 66, t);
+  for (let i = 0; i < NL; i++) {
+    const L = leaves[i];
+    V.copy(L.base);
+    V.x += Math.sin(t * 1.3 + L.ph) * .04; V.y += Math.sin(t * 1.1 + L.ph) * .04;
+    C.setRGB(.45, .85, .55).lerp(C.clone().setRGB(1, .62 + L.gold * .25, .25), golden);
+    let a = lIn;
+    if (L.fall && t > L.t0) {
+      const f = t - L.t0;
+      const down = Math.min(f, 2.2);
+      V.y -= down * down * .45;
+      V.x += Math.sin(f * 2 + L.ph) * .35 * Math.min(f, 1);
+      const up = Math.max(0, f - 2.2);
+      V.y += up * up * .35;
+      C.lerp(new THREE.Color(1.6, 1.5, 1.3), sm(1.6, 3, f));
+      a *= 1 - sm(4.5, 6.5, f);
+    }
+    leafPos.set([V.x, V.y, V.z], i * 3);
+    leafCol.set([C.r * a, C.g * a, C.b * a], i * 3);
+  }
+  leafGeo.attributes.position.needsUpdate = true; leafGeo.attributes.color.needsUpdate = true;
+
+  bloom.strength = .95 + .35 * sm(62, 70, t);
+
+  // text
+  let li = -1, op = 0;
+  for (let i = 0; i < LINES.length; i++) {
+    const [a, b] = LINES[i];
+    if (t >= a - .6 && t <= b + .6) { li = i; op = win(t, a - .6, a + .3, b - .3, b + .6); break; }
+  }
+  if (li !== lastLine) { lineEl.innerHTML = li >= 0 ? LINES[li][2] : ''; lastLine = li; }
+  lineEl.style.opacity = op;
+  titleEl.style.opacity = win(t, 66, 68, 71, 72.2);
+  const ci = Math.min(3, Math.floor(t / 18));
+  chapEl.textContent = CH[ci].name;
+  railBtns.forEach((btn, i) => {
+    btn.classList.toggle('on', i === ci);
+    btn.querySelector('i').style.transform = `scaleX(${clamp((t - CH[i].s) / 18)})`;
+  });
+}
+
+// ---------- UI ----------
+const rail = document.getElementById('rail');
+const railBtns = CH.map((c, i) => {
+  const b = document.createElement('button'); b.type = 'button';
+  b.innerHTML = `<span class="bar"><i></i></span><span class="lbl">${c.name.split(' · ')[1]}</span>`;
+  b.addEventListener('click', () => { time = c.s + .01; });
+  rail.appendChild(b); return b;
+});
+const playBtn = document.getElementById('play');
+let time = +(params.get('t') || 0), playing = !capture;
+const setPlay = p => { playing = p; playBtn.textContent = p ? '暫停' : '播放'; };
+playBtn.addEventListener('click', () => setPlay(!playing));
+addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); setPlay(!playing); } });
+
+let last = performance.now();
+function frame(now) {
+  const dt = Math.min(.1, (now - last) / 1000); last = now;
+  if (playing) { time += dt; if (time >= T) time = 0; }
+  update(time); composer.render();
+  requestAnimationFrame(frame);
+}
+if (capture) {
+  window.__renderAt = t => { time = t; update(t); composer.render(); return true; };
+  window.__ready = true;
+} else requestAnimationFrame(frame);
+</script>
