@@ -1,11 +1,8 @@
 <meta charset="utf-8">
 <title>年輪與光</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500&family=Noto+Sans+TC:wght@400;500&display=swap">
 <style>
-/* Layout: full-bleed WebGL film, subtitle band at bottom, slim chapter rail on top. Single dark look (night sky + amber light). */
+/* Layout: full-bleed WebGL film, no text. Single dark look (night sky + amber light). */
 :root {
   --ink: #070a12;
   --mist: #c9d2e3;
@@ -21,76 +18,10 @@ html, body { height: 100%; }
 body { background: var(--ink); color: var(--mist); overflow: hidden; font-family: var(--sans); }
 #stage { position: fixed; inset: 0; display: block; width: 100%; height: 100%; }
 
-.top {
-  position: fixed; left: 0; right: 0; top: 0; z-index: 2;
-  padding-top: calc(14px + env(safe-area-inset-top, 0px));
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  display: grid; gap: 10px;
-  background: linear-gradient(to bottom, rgba(7,10,18,.7), rgba(7,10,18,0));
-  padding-bottom: 24px;
-}
-.rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.rail button {
-  all: unset; cursor: pointer; display: grid; gap: 6px; min-width: 0;
-  font-size: 12px; letter-spacing: .08em; color: var(--dim);
-}
-.rail button span.bar { display: block; height: 2px; background: var(--rail); position: relative; overflow: hidden; border-radius: 1px; }
-.rail button span.bar i { position: absolute; inset: 0; transform-origin: left; transform: scaleX(0); background: var(--amber); }
-.rail button.on { color: var(--mist); }
-.rail button:focus-visible { outline: 1px solid var(--amber); outline-offset: 4px; }
-.rail .lbl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.chap { font-family: var(--serif); font-size: 13px; letter-spacing: .2em; color: var(--amber); }
-#play {
-  all: unset; cursor: pointer; font-size: 12px; letter-spacing: .1em; color: var(--mist);
-  border: 1px solid var(--rail); padding: 5px 12px; border-radius: 999px;
-}
-#play:focus-visible { outline: 1px solid var(--amber); outline-offset: 3px; }
-
-.sub {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 2; text-align: center;
-  padding-bottom: calc(clamp(28px, 8vh, 72px) + env(safe-area-inset-bottom, 0px));
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  pointer-events: none;
-}
-#line {
-  display: inline-block; max-width: 34em;
-  font-family: var(--serif); font-weight: 300; font-size: clamp(17px, 2.4vw, 26px);
-  line-height: 1.7; letter-spacing: .12em; color: var(--mist); text-wrap: balance;
-  text-shadow: 0 0 18px rgba(7,10,18,.9);
-}
-#line small { display: block; font-family: var(--sans); font-size: .55em; letter-spacing: .2em; color: var(--dim); margin-top: .4em; }
-
-#title {
-  position: fixed; inset: 0; z-index: 1; display: grid; place-items: start center; padding-top: 13vh; text-align: center;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  pointer-events: none; opacity: 0;
-}
-#title h1 {
-  margin: 0; font-family: var(--serif); font-weight: 500;
-  font-size: clamp(26px, 5vw, 56px); letter-spacing: .3em; color: #fff3e2;
-  text-shadow: 0 0 30px rgba(242,182,109,.55); text-wrap: balance;
-}
-#title p { margin: 1.2em 0 0; font-family: var(--serif); font-weight: 300; font-size: clamp(14px, 1.8vw, 19px); letter-spacing: .2em; color: var(--mist); text-wrap: balance; }
-
-body.capture .top { display: none; }
 </style>
 
 <canvas id="stage"></canvas>
 
-<div class="top">
-  <div class="row">
-    <div class="chap" id="chap">第一章 · 不是單向的衰退</div>
-    <button id="play" type="button">暫停</button>
-  </div>
-  <nav class="rail" id="rail" aria-label="章節"></nav>
-</div>
-
-<div id="title"><div><h1>年輪與光</h1><p>老去不是單向的衰退，是重新整理生命的過程</p></div></div>
-<div class="sub"><div id="line"></div></div>
 
 <script type="importmap">
 { "imports": {
@@ -105,26 +36,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
-const T = 72;               // total length (s)
-const CH = [
-  { s: 0,  name: '第一章 · 不是單向的衰退' },
-  { s: 18, name: '第二章 · 重新理解自己' },
-  { s: 36, name: '第三章 · 重新整理生命' },
-  { s: 54, name: '第四章 · 學會調整心態' },
-];
-const LINES = [
-  [1, 5.5,  '我們常以為，老去是一條向下的線。'],
-  [6.5, 11, '但心理學看見的，是一條會轉彎的路。'],
-  [12, 17,  '衰退與成長，從來是同時發生的。'],
-  [19, 24.5,'外表會改變，像年輪一圈一圈留下時間。'],
-  [25.5, 30,'每一道痕跡，都是走過的證明。'],
-  [31, 35.5,'晚年的課題，是統整，而不是絕望。<small>Erikson · 自我統整 vs. 絕望</small>'],
-  [37, 42,  '一生累積了許多碎片。'],
-  [43, 47.5,'當時間變得有限，我們開始挑選。'],
-  [48.5, 53,'把心力留給真正重要的人與事。<small>Carstensen · 社會情緒選擇理論</small>'],
-  [55, 59.5,'放不下的，學著放下。'],
-  [60.5, 65,'放下的化成光，留下的長成枝葉。'],
-];
+const T = 72;               // 內部時間軸長度 (s)，播放時壓縮為 20 秒
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const sm = (a, b, x) => { const k = clamp((x - a) / (b - a)); return k * k * (3 - 2 * k); };
@@ -291,8 +203,6 @@ function camAt(t) {
 
 // ---------- update ----------
 const M = new THREE.Matrix4(), Q = new THREE.Quaternion(), V = new THREE.Vector3(), S = new THREE.Vector3(), C = new THREE.Color(), UP = new THREE.Vector3(0, 1, 0);
-const lineEl = document.getElementById('line'), titleEl = document.getElementById('title'), chapEl = document.getElementById('chap');
-let lastLine = -1;
 
 function update(t) {
   camAt(t);
@@ -388,46 +298,23 @@ function update(t) {
 
   bloom.strength = .95 + .35 * sm(62, 70, t);
 
-  // text
-  let li = -1, op = 0;
-  for (let i = 0; i < LINES.length; i++) {
-    const [a, b] = LINES[i];
-    if (t >= a - .6 && t <= b + .6) { li = i; op = win(t, a - .6, a + .3, b - .3, b + .6); break; }
-  }
-  if (li !== lastLine) { lineEl.innerHTML = li >= 0 ? LINES[li][2] : ''; lastLine = li; }
-  lineEl.style.opacity = op;
-  titleEl.style.opacity = win(t, 66, 68, 71, 72.2);
-  const ci = Math.min(3, Math.floor(t / 18));
-  chapEl.textContent = CH[ci].name;
-  railBtns.forEach((btn, i) => {
-    btn.classList.toggle('on', i === ci);
-    btn.querySelector('i').style.transform = `scaleX(${clamp((t - CH[i].s) / 18)})`;
-  });
 }
 
-// ---------- UI ----------
-const rail = document.getElementById('rail');
-const railBtns = CH.map((c, i) => {
-  const b = document.createElement('button'); b.type = 'button';
-  b.innerHTML = `<span class="bar"><i></i></span><span class="lbl">${c.name.split(' · ')[1]}</span>`;
-  b.addEventListener('click', () => { time = c.s + .01; });
-  rail.appendChild(b); return b;
-});
-const playBtn = document.getElementById('play');
+// ---------- playback ----------
+const LEN = 20, SPEED = T / LEN;   // 20 秒成片
 let time = +(params.get('t') || 0), playing = !capture;
-const setPlay = p => { playing = p; playBtn.textContent = p ? '暫停' : '播放'; };
-playBtn.addEventListener('click', () => setPlay(!playing));
-addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); setPlay(!playing); } });
+canvas.addEventListener('click', () => { playing = !playing; });
+addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); playing = !playing; } });
 
 let last = performance.now();
 function frame(now) {
   const dt = Math.min(.1, (now - last) / 1000); last = now;
-  if (playing) { time += dt; if (time >= T) time = 0; }
-  update(time); composer.render();
+  if (playing) { time += dt; if (time >= LEN) time = 0; }
+  update(time * SPEED); composer.render();
   requestAnimationFrame(frame);
 }
 if (capture) {
-  window.__renderAt = t => { time = t; update(t); composer.render(); return true; };
+  window.__renderAt = t => { time = t; update(t * SPEED); composer.render(); return true; };
   window.__ready = true;
 } else requestAnimationFrame(frame);
 </script>
