@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2014 民調翻盤</title>
+<style>
+  :root{
+    --kmt:#1f57c8; --kmt2:#5f8dff; --dpp:#169a4c; --dpp2:#3fd07b;
+    --gold:#ffd34d; --red:#e8323c; --ink:#ffffff; --bg:#050b1f;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#050b1f; } }
+  :root[data-theme="dark"]{ --bg:#050b1f; }
+  html,body{margin:0;height:100%;background:#000;overflow:hidden}
+  body{display:flex;align-items:center;justify-content:center;
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","WenQuanYi Zen Hei",sans-serif;color:var(--ink)}
+  #stage{position:relative;width:1920px;height:1080px;flex:none;transform-origin:center center;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 38%,#16306e 0%,#0a1638 45%,var(--bg) 100%)}
+  #stage canvas{position:absolute;inset:0}
+  .ov{position:absolute;will-change:opacity,transform}
+  #lower{left:80px;top:64px;opacity:0}
+  #lower .tag{display:inline-block;background:var(--red);font-size:30px;font-weight:700;padding:6px 18px;letter-spacing:2px}
+  #lower .ttl{margin-top:10px;font-size:72px;font-weight:900;letter-spacing:4px;padding-left:22px;border-left:12px solid var(--gold);
+    text-shadow:0 4px 18px rgba(0,0,0,.6)}
+  #phase{right:80px;top:70px;font-size:44px;font-weight:800;letter-spacing:6px;padding:12px 44px;
+    border-radius:60px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.45);backdrop-filter:blur(4px);opacity:0;white-space:nowrap}
+  #callout{left:0;right:0;bottom:60px;text-align:center;opacity:0}
+  #callout .band{display:inline-block;padding:18px 70px 22px;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.72) 12%,rgba(0,0,0,.72) 88%,rgba(0,0,0,0))}
+  #callout .sub{font-size:40px;font-weight:700;letter-spacing:3px;color:#dfe8ff}
+  #callout .big{font-size:96px;font-weight:900;color:var(--gold);letter-spacing:4px;line-height:1.15;text-shadow:0 6px 24px rgba(0,0,0,.7)}
+  .lbl{transform:translate(-50%,-100%);text-align:center;opacity:0;white-space:nowrap;text-shadow:0 3px 12px rgba(0,0,0,.8)}
+  .lbl .num{font-size:56px;font-weight:900;letter-spacing:1px}
+  .lbl .pct{font-size:34px;font-weight:700;color:#e9efff}
+  .lbl .lead{display:inline-block;font-size:34px;font-weight:800;background:var(--gold);color:#1a1a1a;padding:4px 18px;border-radius:8px}
+  #title{left:0;right:0;top:600px;text-align:center;opacity:0}
+  #title .sub{font-size:44px;font-weight:700;letter-spacing:10px;color:#cfe0ff}
+  #title .main{margin-top:14px;font-size:120px;font-weight:900;letter-spacing:8px;text-shadow:0 8px 30px rgba(0,0,0,.7)}
+  #title .main em{font-style:normal;color:var(--gold)}
+  #end1{left:0;right:0;top:110px;text-align:center;opacity:0;font-size:64px;font-weight:900;letter-spacing:4px;text-shadow:0 4px 18px rgba(0,0,0,.7)}
+  #end1 .arrow{color:var(--gold);margin:0 18px}
+  #end2{left:0;right:0;bottom:90px;text-align:center;opacity:0}
+  #end2 .big{display:inline-block;font-size:110px;font-weight:900;letter-spacing:6px;color:var(--gold);padding:10px 70px;
+    background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.72) 12%,rgba(0,0,0,.72) 88%,rgba(0,0,0,0));text-shadow:0 6px 24px rgba(0,0,0,.7)}
+  #end2 .sub{margin-top:10px;font-size:42px;font-weight:700;letter-spacing:6px}
+  .tagline{font-size:34px;font-weight:800;letter-spacing:2px;transform:translate(-50%,-100%);opacity:0;white-space:nowrap;
+    padding:6px 20px;border-radius:10px;background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.35)}
+  #note{left:60px;bottom:40px;font-size:26px;color:#c9d4f5;opacity:0}
+  #source{right:60px;bottom:40px;font-size:26px;color:#c9d4f5;opacity:0}
+</style>
+<script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="title" class="ov"><div class="sub">2014 九合一選舉回顧</div><div class="main">民調大贏 <em>≠</em> 穩贏</div></div>
+  <div id="lower" class="ov"><span class="tag">2014 九合一選舉</span><div class="ttl" id="lowerTtl">新北市長選舉</div></div>
+  <div id="phase" class="ov">選前民調</div>
+  <div id="lblA" class="ov lbl"></div>
+  <div id="lblB" class="ov lbl"></div>
+  <div id="callout" class="ov"><div class="band"><div class="sub" id="calloutSub"></div><div class="big" id="calloutBig"></div></div></div>
+  <div id="end1" class="ov">支持者覺得穩贏<span class="arrow">➜</span>不出門投票</div>
+  <div id="tagStay" class="ov tagline">留在家 💤</div>
+  <div id="end2" class="ov"><div class="big">民調領先 ≠ 當選</div><div class="sub">投票率才是勝負關鍵</div></div>
+  <div id="note" class="ov">＊選前民調柱狀為示意，非實際數字</div>
+  <div id="source" class="ov">資料來源：中央選舉委員會</div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { FontLoader } from './lib/FontLoader.js';
+import { TextGeometry } from './lib/TextGeometry.js';
+
+/* ================= 資料 ================= */
+const FONT = '"Noto Sans TC","PingFang TC","Microsoft JhengHei","WenQuanYi Zen Hei",sans-serif';
+const PARTY = {
+  kmt:{name:'國民黨', c1:'#2f6bea', c2:'#0f2f80', hex:0x2a62e0},
+  dpp:{name:'民進黨', c1:'#22b35e', c2:'#0b5a2c', hex:0x1fa457},
+};
+const RACES = [
+  { title:'新北市長選舉', start:4, poll:[5.9,2.1], pollLead:'民調大幅領先',
+    A:{name:'朱立倫', party:'kmt', role:'國民黨｜尋求連任', votes:959302, pct:50.06, photo:'photos/zhu.jpg'},
+    B:{name:'游錫堃', party:'dpp', role:'民進黨', votes:934774, pct:48.78, photo:'photos/you.jpg'},
+    winner:'A', calloutSub:'選前民調大贏 ➜ 開票', calloutBig:'只贏 24,528 票' },
+  { title:'桃園市長選舉', start:14, poll:[5.5,2.9], pollLead:'選前民調領先',
+    A:{name:'吳志揚', party:'kmt', role:'國民黨｜尋求連任', votes:463133, pct:47.97, photo:'photos/wu.jpg'},
+    B:{name:'鄭文燦', party:'dpp', role:'民進黨', votes:492414, pct:51.00, photo:'photos/cheng.jpg'},
+    winner:'B', calloutSub:'選前民調領先 ➜ 開票', calloutBig:'吳志揚 輸 29,281 票' },
+];
+const END_START = 24, TOTAL = 31;
+
+/* ================= 工具 ================= */
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eout=x=>1-Math.pow(1-x,3);
+const eback=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+const lerp=(a,b,x)=>a+(b-a)*x;
+const fade=(t,a,b,c,d)=>Math.min(seg(t,a,b), 1-seg(t,c,d)); // 淡入 a→b，淡出 c→d
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+function rng(seed){return()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;}}
+
+/* ================= 場景 ================= */
+const W=1920,H=1080;
+const stage=document.getElementById('stage');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(1); renderer.setSize(W,H);
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.05;
+stage.prepend(renderer.domElement);
+const scene=new THREE.Scene();
+scene.fog=new THREE.Fog(0x081433,22,48);
+const camera=new THREE.PerspectiveCamera(40,W/H,0.1,200);
+
+scene.add(new THREE.HemisphereLight(0xbcd2ff,0x0a1430,0.9));
+const key=new THREE.DirectionalLight(0xffffff,2.2);
+key.position.set(6,14,10); key.castShadow=true;
+key.shadow.mapSize.set(2048,2048);
+Object.assign(key.shadow.camera,{left:-14,right:14,top:14,bottom:-14,near:1,far:40});
+key.shadow.bias=-0.0005; key.shadow.radius=4;
+scene.add(key);
+const rim=new THREE.DirectionalLight(0x6fa8ff,1.4); rim.position.set(-8,6,-10); scene.add(rim);
+
+// 地板：放射漸層 + 網格
+function floorTex(){
+  const c=document.createElement('canvas'); c.width=c.height=1024; const g=c.getContext('2d');
+  const r=g.createRadialGradient(512,512,0,512,512,512);
+  r.addColorStop(0,'#2a4fa8'); r.addColorStop(.55,'#122a66'); r.addColorStop(1,'rgba(8,20,51,0)');
+  g.fillStyle=r; g.fillRect(0,0,1024,1024);
+  g.strokeStyle='rgba(140,180,255,0.18)'; g.lineWidth=2;
+  for(let i=0;i<=1024;i+=48){g.beginPath();g.moveTo(i,0);g.lineTo(i,1024);g.stroke();g.beginPath();g.moveTo(0,i);g.lineTo(1024,i);g.stroke();}
+  const m=g.createRadialGradient(512,512,300,512,512,512); m.addColorStop(0,'rgba(0,0,0,0)'); m.addColorStop(1,'rgba(8,20,51,1)');
+  g.globalCompositeOperation='destination-out'; const m2=g.createRadialGradient(512,512,330,512,512,512);
+  m2.addColorStop(0,'rgba(0,0,0,0)'); m2.addColorStop(1,'rgba(0,0,0,1)'); g.fillStyle=m2; g.fillRect(0,0,1024,1024);
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t;
+}
+const floor=new THREE.Mesh(new THREE.CircleGeometry(16,96),
+  new THREE.MeshStandardMaterial({map:floorTex(),transparent:true,roughness:.55,metalness:.25}));
+floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
+const shadowCatcher=new THREE.Mesh(new THREE.CircleGeometry(12,64),new THREE.ShadowMaterial({opacity:.35}));
+shadowCatcher.rotation.x=-Math.PI/2; shadowCatcher.position.y=0.01; shadowCatcher.receiveShadow=true; scene.add(shadowCatcher);
+const ring=new THREE.Mesh(new THREE.TorusGeometry(10.5,0.035,8,200),new THREE.MeshBasicMaterial({color:0x79b4ff,transparent:true,opacity:.7}));
+ring.rotation.x=-Math.PI/2; ring.position.y=0.03; scene.add(ring);
+const ring2=new THREE.Mesh(new THREE.RingGeometry(7.6,7.7,128,1,0,Math.PI*1.3),new THREE.MeshBasicMaterial({color:0xffd34d,transparent:true,opacity:.55,side:THREE.DoubleSide}));
+ring2.rotation.x=-Math.PI/2; ring2.position.y=0.04; scene.add(ring2);
+
+// 漂浮光點
+const dust=(()=>{const n=420,p=new Float32Array(n*3),r=rng(7);
+  for(let i=0;i<n;i++){p[i*3]=(r()-.5)*40;p[i*3+1]=r()*16;p[i*3+2]=(r()-.5)*30-4;}
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  const pts=new THREE.Points(g,new THREE.PointsMaterial({color:0x9cc4ff,size:0.07,transparent:true,opacity:.7,depthWrite:false}));
+  pts.userData.base=p.slice(); scene.add(pts); return pts;})();
+
+/* ---- 透明度控制 ---- */
+function prep(group){group.traverse(o=>{if(o.material){const ms=Array.isArray(o.material)?o.material:[o.material];
+  ms.forEach(m=>{m.transparent=true;if(m.userData.base===undefined)m.userData.base=m.opacity;});}});}
+function setOpacity(group,v){group.visible=v>0.002;group.traverse(o=>{if(o.material){const ms=Array.isArray(o.material)?o.material:[o.material];
+  ms.forEach(m=>{m.opacity=m.userData.base*v; m.depthWrite=v>0.98;});}});}
+
+/* ---- 人物卡 ---- */
+function loadImg(src){return new Promise(res=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;});}
+function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
+function cardTexture(c,img){
+  const P=PARTY[c.party]; const cv=document.createElement('canvas'); cv.width=600; cv.height=820; const g=cv.getContext('2d');
+  const lg=g.createLinearGradient(0,0,0,820); lg.addColorStop(0,P.c1); lg.addColorStop(1,P.c2);
+  rr(g,0,0,600,820,40); g.fillStyle=lg; g.fill();
+  g.save(); rr(g,28,28,544,560,26); g.clip();
+  if(img){const s=Math.max(544/img.width,560/img.height),w=img.width*s,h=img.height*s;
+    g.drawImage(img,28+(544-w)/2,28+(560-h)*0.25,w,h);}
+  else{
+    const bg=g.createLinearGradient(0,28,0,588); bg.addColorStop(0,'rgba(255,255,255,.22)'); bg.addColorStop(1,'rgba(0,0,0,.25)');
+    g.fillStyle=bg; g.fillRect(28,28,544,560);
+    g.fillStyle='rgba(255,255,255,.88)';
+    g.beginPath(); g.arc(300,250,105,0,Math.PI*2); g.fill();
+    g.beginPath(); g.ellipse(300,610,235,215,0,Math.PI,0); g.fill();
+  }
+  g.restore();
+  g.fillStyle='#fff'; g.textAlign='center'; g.textBaseline='middle';
+  g.font=`900 100px ${FONT}`; g.fillText(c.name,300,672);
+  g.font=`700 38px ${FONT}`; g.fillStyle='rgba(255,255,255,.88)'; g.fillText(c.role,300,758);
+  const t=new THREE.CanvasTexture(cv); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=8; return t;
+}
+function makeCard(c,img){
+  const grp=new THREE.Group();
+  const face=new THREE.Mesh(new THREE.PlaneGeometry(3.2,4.37),new THREE.MeshBasicMaterial({map:cardTexture(c,img),transparent:true}));
+  face.position.z=0.07; grp.add(face);
+  const back=new THREE.Mesh(new THREE.BoxGeometry(3.32,4.49,0.12),new THREE.MeshStandardMaterial({color:PARTY[c.party].hex,metalness:.6,roughness:.3}));
+  back.castShadow=true; grp.add(back);
+  const ped=new THREE.Mesh(new THREE.CylinderGeometry(1.3,1.45,0.35,48),new THREE.MeshStandardMaterial({color:0xdfe6ff,metalness:.3,roughness:.35}));
+  ped.position.y=-2.5; ped.castShadow=true; ped.receiveShadow=true; grp.add(ped);
+  return grp;
+}
+/* ---- 柱狀 ---- */
+function makeBar(party){
+  const grp=new THREE.Group();
+  const geo=new THREE.BoxGeometry(1.9,1,1.9); geo.translate(0,.5,0);
+  const bar=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:PARTY[party].hex,metalness:.25,roughness:.3,emissive:PARTY[party].hex,emissiveIntensity:.18}));
+  bar.castShadow=true; grp.add(bar);
+  const cap=new THREE.Mesh(new THREE.BoxGeometry(1.98,0.08,1.98),new THREE.MeshBasicMaterial({color:party==='kmt'?0x9ec0ff:0x9cf0bf}));
+  grp.add(cap);
+  const base=new THREE.Mesh(new THREE.BoxGeometry(2.4,0.12,2.4),new THREE.MeshStandardMaterial({color:0x1a2c5c,metalness:.5,roughness:.4}));
+  base.position.y=0.06; base.receiveShadow=true; grp.add(base);
+  grp.userData={bar,cap}; return grp;
+}
+function setBar(b,h){h=Math.max(h,0.001);b.userData.bar.scale.y=h;b.userData.bar.position.y=0.12;b.userData.cap.position.y=h+0.14;}
+/* ---- 當選章 ---- */
+function stampTex(text){const cv=document.createElement('canvas');cv.width=cv.height=512;const g=cv.getContext('2d');
+  g.strokeStyle='#ff3b3b';g.fillStyle='rgba(232,50,60,.92)';g.lineWidth=22;
+  g.beginPath();g.arc(256,256,226,0,Math.PI*2);g.fill();g.strokeStyle='#fff';g.lineWidth=12;g.beginPath();g.arc(256,256,198,0,Math.PI*2);g.stroke();
+  g.fillStyle='#fff';g.font=`900 170px ${FONT}`;g.textAlign='center';g.textBaseline='middle';g.fillText(text,256,268);
+  const t=new THREE.CanvasTexture(cv);t.colorSpace=THREE.SRGBColorSpace;return t;}
+
+/* ================= 建立選區場景 ================= */
+const races=[];
+async function buildRaces(){
+  for(const R of RACES){
+    const grp=new THREE.Group(); scene.add(grp);
+    const imgs=await Promise.all([loadImg(R.A.photo),loadImg(R.B.photo)]);
+    const cardA=makeCard(R.A,imgs[0]), cardB=makeCard(R.B,imgs[1]);
+    cardA.position.set(-6.3,2.85,-0.6); cardA.rotation.y=0.32;
+    cardB.position.set(6.3,2.85,-0.6); cardB.rotation.y=-0.32;
+    const barA=makeBar(R.A.party), barB=makeBar(R.B.party);
+    barA.position.set(-2.0,0,0.4); barB.position.set(2.0,0,0.4);
+    const stamp=new THREE.Mesh(new THREE.PlaneGeometry(1.7,1.7),new THREE.MeshBasicMaterial({map:stampTex('當選'),transparent:true,depthTest:false}));
+    stamp.renderOrder=10;
+    const wcard=R.winner==='A'?cardA:cardB; stamp.position.set(R.winner==='A'?1.0:-1.0,1.5,0.25); wcard.add(stamp);
+    const lose=new THREE.Mesh(new THREE.PlaneGeometry(3.2,4.37),new THREE.MeshBasicMaterial({color:0x000000,opacity:.45,transparent:true}));
+    lose.position.z=0.09; (R.winner==='A'?cardB:cardA).add(lose);
+    grp.add(cardA,cardB,barA,barB); prep(grp);
+    races.push({R,grp,cardA,cardB,barA,barB,stamp,lose});
+  }
+}
+
+/* ================= 片頭 2014 ================= */
+let title3d=null;
+async function buildTitle(){
+  const font=await new FontLoader().loadAsync('./lib/helvetiker_bold.typeface.json');
+  const geo=new TextGeometry('2014',{font,size:2.6,height:0.7,curveSegments:8,bevelEnabled:true,bevelThickness:.12,bevelSize:.06,bevelSegments:4});
+  geo.center();
+  const mat=[new THREE.MeshStandardMaterial({color:0xffd34d,metalness:.85,roughness:.22,emissive:0x8a5a00,emissiveIntensity:.45}),
+             new THREE.MeshStandardMaterial({color:0xb9871c,metalness:.9,roughness:.35})];
+  title3d=new THREE.Mesh(geo,mat); title3d.castShadow=true;
+  const g=new THREE.Group(); g.add(title3d); g.position.set(0,4.3,0); scene.add(g); prep(g); title3d.userData.grp=g;
+}
+
+/* ================= 片尾：投票箱 + 支持者 ================= */
+const endGrp=new THREE.Group(); scene.add(endGrp);
+const people=[], ballots=[];
+const C_BLUE=new THREE.Color(0x1d4fe0),C_GREY=new THREE.Color(0x4a5068),C_EBLUE=new THREE.Color(0x0a2a90),C_GOLD=new THREE.Color(0x2f6bff);
+const BOX={x:2.9,y:0,z:0.6,w:3.4,h:2.7,d:2.6};
+function buildEnd(){
+  const box=new THREE.Mesh(new THREE.BoxGeometry(BOX.w,BOX.h,BOX.d),new THREE.MeshStandardMaterial({color:0xdde8ff,transparent:true,opacity:.22,roughness:.1,metalness:.1}));
+  box.position.set(BOX.x,BOX.h/2+0.02,BOX.z); endGrp.add(box);
+  const edges=new THREE.LineSegments(new THREE.EdgesGeometry(box.geometry),new THREE.LineBasicMaterial({color:0xffffff}));
+  edges.position.copy(box.position); endGrp.add(edges);
+  const lid=new THREE.Mesh(new THREE.BoxGeometry(BOX.w+0.12,0.16,BOX.d+0.12),new THREE.MeshStandardMaterial({color:0xe8323c,roughness:.4}));
+  lid.position.set(BOX.x,BOX.h+0.1,BOX.z); lid.castShadow=true; endGrp.add(lid);
+  const slot=new THREE.Mesh(new THREE.BoxGeometry(1.6,0.05,0.18),new THREE.MeshBasicMaterial({color:0x111111}));
+  slot.position.set(BOX.x,BOX.h+0.19,BOX.z); endGrp.add(slot);
+  // 票匭字樣
+  const cv=document.createElement('canvas');cv.width=512;cv.height=200;const g=cv.getContext('2d');
+  g.fillStyle='#e8323c';rr(g,0,0,512,200,24);g.fill();g.fillStyle='#fff';g.font=`900 120px ${FONT}`;g.textAlign='center';g.textBaseline='middle';g.fillText('票匭',256,108);
+  const tx=new THREE.CanvasTexture(cv);tx.colorSpace=THREE.SRGBColorSpace;
+  const lab=new THREE.Mesh(new THREE.PlaneGeometry(1.6,0.62),new THREE.MeshBasicMaterial({map:tx,transparent:true}));
+  lab.position.set(BOX.x,1.55,BOX.z+BOX.d/2+0.01); endGrp.add(lab);
+  // 支持者 6x5
+  const r=rng(42); const cols=7,rows=5;
+  const order=[...Array(cols*rows).keys()].sort(()=>r()-.5);
+  const voters=new Set(order.slice(0,8));
+  for(let i=0;i<cols*rows;i++){
+    const cx=i%cols, cz=Math.floor(i/cols);
+    const p=new THREE.Group();
+    const mat=new THREE.MeshStandardMaterial({color:0x1d4fe0,roughness:.4,metalness:.1,emissive:0x0a2a90,emissiveIntensity:.5});
+    const body=new THREE.Mesh(new THREE.CylinderGeometry(0.16,0.26,0.72,20),mat); body.position.y=0.36; body.castShadow=true;
+    const head=new THREE.Mesh(new THREE.SphereGeometry(0.17,20,16),mat); head.position.y=0.92; head.castShadow=true;
+    p.add(body,head);
+    p.position.set(-7.6+cx*0.95+(cz%2)*0.35, 0, -1.8+cz*0.85);
+    p.userData={mat,voter:voters.has(i),delay:r()*0.6};
+    endGrp.add(p); people.push(p);
+  }
+  // 選票
+  let k=0;
+  for(const p of people){ if(!p.userData.voter) continue;
+    const b=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.68,0.02),new THREE.MeshStandardMaterial({color:0xffffff,roughness:.6}));
+    b.castShadow=true; b.userData={from:p.position.clone(),i:k++}; endGrp.add(b); ballots.push(b);
+  }
+  prep(endGrp);
+}
+
+/* ================= 覆蓋文字 ================= */
+const $=id=>document.getElementById(id);
+const ov={title:$('title'),lower:$('lower'),lowerTtl:$('lowerTtl'),phase:$('phase'),lblA:$('lblA'),lblB:$('lblB'),
+  callout:$('callout'),cSub:$('calloutSub'),cBig:$('calloutBig'),end1:$('end1'),end2:$('end2'),note:$('note'),source:$('source'),
+  stay:$('tagStay')};
+const v3=new THREE.Vector3();
+function toScreen(obj,dy=0,out){obj.updateWorldMatrix(true,false);v3.set(0,dy,0).applyMatrix4(obj.matrixWorld).project(camera);
+  return {x:(v3.x+1)/2*W,y:(1-v3.y)/2*H};}
+function place(el,p,op,sc=1){el.style.left=p.x+'px';el.style.top=p.y+'px';el.style.opacity=op;el.style.transform=`translate(-50%,-100%) scale(${sc})`;}
+function pop(el,o,s=1){el.style.opacity=o;}
+
+/* ================= 每格更新 ================= */
+function update(t){
+  // 攝影機：連續運鏡
+  const cx=Math.sin(t*0.22)*1.8, cz=15.2+Math.sin(t*0.17)*0.8;
+  let cy=4.4, ty=2.9, px=cx, pz=cz, tx=0;
+  if(t<4){const k=eio(seg(t,0,4)); cy=lerp(6.5,4.4,k);}
+  const ek=eio(seg(t,END_START-0.6,END_START+0.9));
+  px=lerp(cx,-1.0+Math.sin(t*0.3)*0.8,ek); pz=lerp(cz,12.2-seg(t,END_START,TOTAL)*1.2,ek); cy=lerp(cy,3.6,ek); ty=lerp(ty,1.4,ek); tx=lerp(0,-0.6,ek);
+  camera.position.set(px,cy,pz); camera.lookAt(tx,ty,0);
+  ring.rotation.z=t*0.15; ring2.rotation.z=-t*0.3;
+  const dp=dust.geometry.attributes.position, b=dust.userData.base;
+  for(let i=0;i<dp.count;i++){dp.array[i*3+1]=(b[i*3+1]+t*0.25+Math.sin(t*.7+i)*0.15)%16;}
+  dp.needsUpdate=true;
+
+  // --- 片頭 ---
+  if(title3d){const g=title3d.userData.grp;
+    const inK=eout(seg(t,0.2,1.6)), outK=seg(t,3.3,4.1);
+    setOpacity(g,Math.min(seg(t,0.2,0.9),1-outK));
+    g.rotation.y=lerp(-1.4,0,inK)+Math.sin(t*1.2)*0.06; g.position.y=4.3+lerp(-1.5,0,inK)+outK*2.5;
+    g.scale.setScalar(lerp(0.6,1,eback(seg(t,0.2,1.6))));
+  }
+  const tO=fade(t,1.0,1.8,3.3,4.0); ov.title.style.opacity=tO; ov.title.style.transform=`translateY(${(1-eout(seg(t,1.0,1.8)))*40}px)`;
+
+  // --- 選區 ---
+  let lowerOp=0, lowerTxt=null, phaseOp=0, phaseTxt='', calloutOp=0, noteOp=0;
+  for(const S of races){
+    const R=S.R, u=t-R.start;
+    const vis=fade(u,0,0.8,9.3,10);
+    setOpacity(S.grp,vis);
+    if(!S.grp.visible){ continue; }
+    // 人物卡進場
+    const ka=eback(seg(u,0.1,1.0)), kb=eback(seg(u,0.3,1.2));
+    S.cardA.position.x=lerp(-11,-6.3,ka); S.cardB.position.x=lerp(11,6.3,kb);
+    // 柱狀
+    const fA=R.A.pct*0.11, fB=R.B.pct*0.11;
+    const g1=eout(seg(u,0.8,2.2)), g2=eio(seg(u,4.2,5.6));
+    const hA=lerp(R.poll[0]*g1,fA,g2), hB=lerp(R.poll[1]*g1,fB,g2);
+    setBar(S.barA,hA); setBar(S.barB,hB);
+    // 當選章 / 落選遮罩
+    const sk=seg(u,6.0,6.5);
+    S.stamp.visible=sk>0 && vis>0.01; S.stamp.scale.setScalar(lerp(2.4,1,eout(sk))); S.stamp.material.opacity=sk*vis; S.stamp.rotation.z=-0.2;
+    S.lose.material.opacity=0.5*seg(u,6.0,6.6)*vis;
+    // 柱上數字
+    const pollPhase=u<4.3, cnt=eout(seg(u,4.3,6.0));
+    const pa=toScreen(S.barA.userData.cap,0.3), pb=toScreen(S.barB.userData.cap,0.3);
+    const lv=vis*Math.min(1,seg(u,1.4,2.0));
+    if(pollPhase){
+      const lead=R.poll[0]>R.poll[1]?ov.lblA:ov.lblB;
+      const other=lead===ov.lblA?ov.lblB:ov.lblA;
+      lead.innerHTML=`<span class="lead">${R.pollLead}</span>`; other.innerHTML='';
+      place(ov.lblA,pa,lv*fade(u,1.4,2.0,4.0,4.3)); place(ov.lblB,pb,lv*fade(u,1.4,2.0,4.0,4.3));
+    }else{
+      const col=c=>c.party==='kmt'?'#bcd3ff':'#b6f5cf';
+      ov.lblA.innerHTML=`<div class="num" style="color:${col(R.A)}">${fmt(R.A.votes*cnt)}<span style="font-size:32px"> 票</span></div><div class="pct">${(R.A.pct*cnt).toFixed(2)}%</div>`;
+      ov.lblB.innerHTML=`<div class="num" style="color:${col(R.B)}">${fmt(R.B.votes*cnt)}<span style="font-size:32px"> 票</span></div><div class="pct">${(R.B.pct*cnt).toFixed(2)}%</div>`;
+      const o=vis*seg(u,4.3,4.8); place(ov.lblA,pa,o); place(ov.lblB,pb,o);
+    }
+    if(vis>0.01){
+      lowerOp=Math.max(lowerOp,vis); lowerTxt=R.title;
+      phaseOp=vis*Math.min(fade(u,0.8,1.3,3.9,4.2)+fade(u,4.4,4.9,20,21),1);
+      phaseTxt=u<4.2?'選前民調':'開票結果';
+      noteOp=vis*fade(u,1.4,2.0,3.9,4.2);
+      const co=vis*seg(u,6.4,7.0);
+      if(co>calloutOp){calloutOp=co; ov.cSub.textContent=R.calloutSub; ov.cBig.textContent=R.calloutBig;
+        ov.callout.style.transform=`scale(${lerp(1.25,1,eout(seg(u,6.4,7.0)))})`;}
+    }
+  }
+  if(lowerTxt) ov.lowerTtl.textContent=lowerTxt;
+  ov.lower.style.opacity=lowerOp; ov.lower.style.transform=`translateX(${(1-lowerOp)*-60}px)`;
+  ov.phase.textContent=phaseTxt; ov.phase.style.opacity=phaseOp;
+  ov.callout.style.opacity=calloutOp; ov.note.style.opacity=noteOp;
+  ov.source.style.opacity=Math.max(fade(t,8.4,9,13.3,14),fade(t,18.4,19,23.3,24));
+  if(t<4||t>END_START){ if(!races.some(s=>s.grp.visible)){ov.lblA.style.opacity=0;ov.lblB.style.opacity=0;} }
+
+  // --- 片尾 ---
+  const e=t-END_START;
+  const ev=fade(e,0,0.8,99,100);
+  setOpacity(endGrp,ev);
+  if(endGrp.visible){
+    for(const p of people){
+      const d=p.userData.delay, k=eback(seg(e,0.2+d,0.9+d));
+      p.scale.setScalar(Math.max(k,0.001)*1.35);
+      const g=seg(e,2.0+d*0.5,2.8+d*0.5);
+      if(!p.userData.voter){
+        p.userData.mat.color.lerpColors(C_BLUE,C_GREY,g); p.userData.mat.emissiveIntensity=0.5*(1-g);
+        p.userData.mat.opacity=ev*lerp(1,0.35,g);
+        
+      }else{
+        p.userData.mat.emissive.lerpColors(C_EBLUE,C_GOLD,g); p.userData.mat.emissiveIntensity=0.5+0.4*g;
+      }
+    }
+    for(const bl of ballots){
+      const i=bl.userData.i, s=3.0+i*0.22, p=eio(seg(e,s,s+1.1));
+      const f=bl.userData.from, to=new THREE.Vector3(BOX.x+((i%3)-1)*0.4,BOX.h+0.4,BOX.z);
+      const inside=seg(e,s+1.1,s+1.5);
+      bl.position.set(lerp(f.x,to.x,p), lerp(1.3,to.y,p)+Math.sin(Math.PI*p)*2.6 - inside*(BOX.h-0.2-i*0.02), lerp(f.z,to.z,p));
+      bl.rotation.set(0, p*Math.PI*2, p<1?Math.sin(p*9)*0.4:Math.PI/2);
+      if(inside>0) bl.rotation.set(Math.PI/2,0,i*0.7);
+      bl.visible=e>s-0.05; bl.material.opacity=ev;
+    }
+    // 標籤
+    const stay=toScreen(people[3],1.5);
+    place(ov.stay,{x:stay.x-30,y:stay.y-40},ev*seg(e,2.6,3.1));
+  }else{ov.stay.style.opacity=0;}
+  ov.end1.style.opacity=seg(e,1.4,2.0); ov.end1.style.transform=`translateY(${(1-eout(seg(e,1.4,2.0)))*-30}px)`;
+  ov.end2.style.opacity=seg(e,4.8,5.4); ov.end2.style.transform=`scale(${lerp(1.3,1,eout(seg(e,4.8,5.4)))})`;
+
+  renderer.render(scene,camera);
+}
+
+/* ================= 啟動 ================= */
+function fit(){const s=Math.min(innerWidth/W,innerHeight/H);stage.style.transform=`scale(${s})`;}
+addEventListener('resize',fit); fit();
+await document.fonts.ready;
+await Promise.all([buildRaces(),buildTitle()]); buildEnd();
+window.__TOTAL=TOTAL;
+window.__setTime=t=>update(t);
+window.__ready=true;
+const params=new URLSearchParams(location.search);
+if(!params.has('render')){
+  const t0=performance.now();
+  const loop=()=>{const t=((performance.now()-t0)/1000)%TOTAL; update(t); requestAnimationFrame(loop);};
+  loop();
+  addEventListener('click',()=>location.reload());
+}
+</script>
+</body>
+</html>
