@@ -18,39 +18,39 @@
     background:radial-gradient(ellipse at 50% 38%,#16306e 0%,#0a1638 45%,var(--bg) 100%)}
   #stage canvas{position:absolute;inset:0}
   .ov{position:absolute;will-change:opacity,transform}
-  #lower{left:80px;top:64px;opacity:0}
-  #lower .tag{display:inline-block;background:var(--red);font-size:30px;font-weight:700;padding:6px 18px;letter-spacing:2px}
-  #lower .ttl{margin-top:10px;font-size:72px;font-weight:900;letter-spacing:4px;padding-left:22px;border-left:12px solid var(--gold);
+  #lower{left:150px;top:178px;opacity:0;display:flex;align-items:center;gap:20px}
+  #lower .tag{display:inline-block;background:var(--red);font-size:28px;font-weight:700;padding:6px 18px;letter-spacing:2px}
+  #lower .ttl{font-size:58px;font-weight:900;letter-spacing:4px;padding-left:22px;border-left:12px solid var(--gold);
     text-shadow:0 4px 18px rgba(0,0,0,.6)}
-  #phase{right:80px;top:70px;font-size:44px;font-weight:800;letter-spacing:6px;padding:12px 44px;
+  #phase{right:150px;top:182px;font-size:38px;font-weight:800;letter-spacing:6px;padding:8px 38px;
     border-radius:60px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.45);backdrop-filter:blur(4px);opacity:0;white-space:nowrap}
-  #callout{left:0;right:0;bottom:60px;text-align:center;opacity:0}
-  #callout .band{display:inline-block;padding:18px 70px 22px;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.72) 12%,rgba(0,0,0,.72) 88%,rgba(0,0,0,0))}
-  #callout .sub{font-size:40px;font-weight:700;letter-spacing:3px;color:#dfe8ff}
-  #callout .big{font-size:96px;font-weight:900;color:var(--gold);letter-spacing:4px;line-height:1.15;text-shadow:0 6px 24px rgba(0,0,0,.7)}
+  #callout{left:0;right:0;bottom:300px;text-align:center;opacity:0}
+  #callout .band{display:inline-block;padding:4px 70px 6px;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.72) 12%,rgba(0,0,0,.72) 88%,rgba(0,0,0,0))}
+  #callout .sub{font-size:28px;font-weight:700;letter-spacing:3px;color:#dfe8ff}
+  #callout .big{font-size:66px;font-weight:900;color:var(--gold);letter-spacing:4px;line-height:1.15;text-shadow:0 6px 24px rgba(0,0,0,.7)}
   .lbl{transform:translate(-50%,-100%);text-align:center;opacity:0;white-space:nowrap;text-shadow:0 3px 12px rgba(0,0,0,.8)}
-  .lbl .num{font-size:56px;font-weight:900;letter-spacing:1px}
-  .lbl .pct{font-size:34px;font-weight:700;color:#e9efff}
-  .lbl .lead{display:inline-block;font-size:34px;font-weight:800;background:var(--gold);color:#1a1a1a;padding:4px 18px;border-radius:8px}
-  #title{left:0;right:0;top:600px;text-align:center;opacity:0}
-  #title .sub{font-size:44px;font-weight:700;letter-spacing:10px;color:#cfe0ff}
-  #title .main{margin-top:14px;font-size:120px;font-weight:900;letter-spacing:8px;text-shadow:0 8px 30px rgba(0,0,0,.7)}
+  .lbl .num{font-size:46px;font-weight:900;letter-spacing:1px}
+  .lbl .pct{font-size:28px;font-weight:700;color:#e9efff}
+  .lbl .lead{display:inline-block;font-size:30px;font-weight:800;background:var(--gold);color:#1a1a1a;padding:4px 18px;border-radius:8px}
+  #title{left:0;right:0;top:520px;text-align:center;opacity:0}
+  #title .sub{font-size:38px;font-weight:700;letter-spacing:10px;color:#cfe0ff}
+  #title .main{margin-top:8px;font-size:104px;font-weight:900;letter-spacing:8px;text-shadow:0 8px 30px rgba(0,0,0,.7)}
   #title .main em{font-style:normal;color:var(--gold)}
-  #end1{left:0;right:0;top:110px;text-align:center;opacity:0;font-size:64px;font-weight:900;letter-spacing:4px;text-shadow:0 4px 18px rgba(0,0,0,.7)}
+  #end1{left:0;right:0;top:180px;text-align:center;opacity:0;font-size:54px;font-weight:900;letter-spacing:4px;text-shadow:0 4px 18px rgba(0,0,0,.7)}
   #end1 .arrow{color:var(--gold);margin:0 18px}
-  #end2{left:0;right:0;bottom:90px;text-align:center;opacity:0}
-  #end2 .big{display:inline-block;font-size:110px;font-weight:900;letter-spacing:6px;color:var(--gold);padding:10px 70px;
+  #end2{left:0;right:0;bottom:300px;text-align:center;opacity:0}
+  #end2 .big{display:inline-block;font-size:84px;font-weight:900;letter-spacing:6px;color:var(--gold);padding:4px 70px;
     background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.72) 12%,rgba(0,0,0,.72) 88%,rgba(0,0,0,0));text-shadow:0 6px 24px rgba(0,0,0,.7)}
-  #end2 .sub{margin-top:10px;font-size:42px;font-weight:700;letter-spacing:6px}
+  #end2 .sub{margin-top:4px;font-size:34px;font-weight:700;letter-spacing:6px}
   .tagline{font-size:34px;font-weight:800;letter-spacing:2px;transform:translate(-50%,-100%);opacity:0;white-space:nowrap;
     padding:6px 20px;border-radius:10px;background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.35)}
-  #note{left:60px;bottom:40px;font-size:26px;color:#c9d4f5;opacity:0}
-  #source{right:60px;bottom:40px;font-size:26px;color:#c9d4f5;opacity:0}
+  #source{right:150px;bottom:304px;font-size:24px;color:#c9d4f5;opacity:0}
 </style>
 <script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
 </head>
 <body>
 <div id="stage">
+  <div id="guide" style="display:none;position:absolute;inset:0;z-index:99;pointer-events:none"><div style="position:absolute;left:0;right:0;top:0;height:170px;background:rgba(255,0,0,.28)"></div><div style="position:absolute;left:0;right:0;top:780px;bottom:0;background:rgba(255,0,0,.28)"></div></div>
   <div id="title" class="ov"><div class="sub">2014 九合一選舉回顧</div><div class="main">民調大贏 <em>≠</em> 穩贏</div></div>
   <div id="lower" class="ov"><span class="tag">2014 九合一選舉</span><div class="ttl" id="lowerTtl">新北市長選舉</div></div>
   <div id="phase" class="ov">選前民調</div>
@@ -60,7 +60,6 @@
   <div id="end1" class="ov">支持者覺得穩贏<span class="arrow">➜</span>不出門投票</div>
   <div id="tagStay" class="ov tagline">留在家 💤</div>
   <div id="end2" class="ov"><div class="big">民調領先 ≠ 當選</div><div class="sub">投票率才是勝負關鍵</div></div>
-  <div id="note" class="ov">＊選前民調柱狀為示意，非實際數字</div>
   <div id="source" class="ov">資料來源：中央選舉委員會</div>
 </div>
 <script type="module">
@@ -75,11 +74,11 @@ const PARTY = {
   dpp:{name:'民進黨', c1:'#22b35e', c2:'#0b5a2c', hex:0x1fa457},
 };
 const RACES = [
-  { title:'新北市長選舉', start:4, poll:[5.9,2.1], pollLead:'民調大幅領先',
+  { title:'新北市長選舉', start:4, poll:[5.2,1.9], pollLead:'民調大幅領先',
     A:{name:'朱立倫', party:'kmt', role:'國民黨｜尋求連任', votes:959302, pct:50.06, photo:'photos/zhu.jpg'},
     B:{name:'游錫堃', party:'dpp', role:'民進黨', votes:934774, pct:48.78, photo:'photos/you.jpg'},
     winner:'A', calloutSub:'選前民調大贏 ➜ 開票', calloutBig:'只贏 24,528 票' },
-  { title:'桃園市長選舉', start:14, poll:[5.5,2.9], pollLead:'選前民調領先',
+  { title:'桃園市長選舉', start:14, poll:[4.9,2.7], pollLead:'選前民調領先',
     A:{name:'吳志揚', party:'kmt', role:'國民黨｜尋求連任', votes:463133, pct:47.97, photo:'photos/wu.jpg'},
     B:{name:'鄭文燦', party:'dpp', role:'民進黨', votes:492414, pct:51.00, photo:'photos/cheng.jpg'},
     winner:'B', calloutSub:'選前民調領先 ➜ 開票', calloutBig:'吳志揚 輸 29,281 票' },
@@ -107,8 +106,11 @@ renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.05;
 stage.prepend(renderer.domElement);
 const scene=new THREE.Scene();
-scene.fog=new THREE.Fog(0x081433,22,48);
+scene.fog=new THREE.Fog(0x081433,34,72);
 const camera=new THREE.PerspectiveCamera(40,W/H,0.1,200);
+// 電視台安全框：上方天標、下方地標/字幕/跑馬燈。重要內容只放在 y 170–780。
+const SAFE={top:170,bottom:780,zoom:1.68,shift:30};
+camera.setViewOffset(W,H,0,SAFE.shift,W,H);
 
 scene.add(new THREE.HemisphereLight(0xbcd2ff,0x0a1430,0.9));
 const key=new THREE.DirectionalLight(0xffffff,2.2);
@@ -215,10 +217,10 @@ async function buildRaces(){
     const grp=new THREE.Group(); scene.add(grp);
     const imgs=await Promise.all([loadImg(R.A.photo),loadImg(R.B.photo)]);
     const cardA=makeCard(R.A,imgs[0]), cardB=makeCard(R.B,imgs[1]);
-    cardA.position.set(-6.3,2.85,-0.6); cardA.rotation.y=0.32;
-    cardB.position.set(6.3,2.85,-0.6); cardB.rotation.y=-0.32;
+    cardA.position.set(-7.0,2.85,-0.6); cardA.rotation.y=0.32;
+    cardB.position.set(7.0,2.85,-0.6); cardB.rotation.y=-0.32;
     const barA=makeBar(R.A.party), barB=makeBar(R.B.party);
-    barA.position.set(-2.0,0,0.4); barB.position.set(2.0,0,0.4);
+    barA.position.set(-2.5,0,0.4); barB.position.set(2.5,0,0.4);
     const stamp=new THREE.Mesh(new THREE.PlaneGeometry(1.7,1.7),new THREE.MeshBasicMaterial({map:stampTex('當選'),transparent:true,depthTest:false}));
     stamp.renderOrder=10;
     const wcard=R.winner==='A'?cardA:cardB; stamp.position.set(R.winner==='A'?1.0:-1.0,1.5,0.25); wcard.add(stamp);
@@ -288,7 +290,7 @@ function buildEnd(){
 /* ================= 覆蓋文字 ================= */
 const $=id=>document.getElementById(id);
 const ov={title:$('title'),lower:$('lower'),lowerTtl:$('lowerTtl'),phase:$('phase'),lblA:$('lblA'),lblB:$('lblB'),
-  callout:$('callout'),cSub:$('calloutSub'),cBig:$('calloutBig'),end1:$('end1'),end2:$('end2'),note:$('note'),source:$('source'),
+  callout:$('callout'),cSub:$('calloutSub'),cBig:$('calloutBig'),end1:$('end1'),end2:$('end2'),source:$('source'),
   stay:$('tagStay')};
 const v3=new THREE.Vector3();
 function toScreen(obj,dy=0,out){obj.updateWorldMatrix(true,false);v3.set(0,dy,0).applyMatrix4(obj.matrixWorld).project(camera);
@@ -303,8 +305,8 @@ function update(t){
   let cy=4.4, ty=2.9, px=cx, pz=cz, tx=0;
   if(t<4){const k=eio(seg(t,0,4)); cy=lerp(6.5,4.4,k);}
   const ek=eio(seg(t,END_START-0.6,END_START+0.9));
-  px=lerp(cx,-1.0+Math.sin(t*0.3)*0.8,ek); pz=lerp(cz,12.2-seg(t,END_START,TOTAL)*1.2,ek); cy=lerp(cy,3.6,ek); ty=lerp(ty,1.4,ek); tx=lerp(0,-0.6,ek);
-  camera.position.set(px,cy,pz); camera.lookAt(tx,ty,0);
+  px=lerp(cx,-1.0+Math.sin(t*0.3)*0.8,ek); pz=lerp(cz,12.2-seg(t,END_START,TOTAL)*1.2,ek); cy=lerp(cy,3.6,ek); ty=lerp(ty,1.0,ek); tx=lerp(0,-0.6,ek);
+  const K=lerp(SAFE.zoom,1.32,ek); camera.position.set(tx+(px-tx)*K, ty+(cy-ty)*K, pz*K); camera.lookAt(tx,ty,0); camera.updateMatrixWorld();
   ring.rotation.z=t*0.15; ring2.rotation.z=-t*0.3;
   const dp=dust.geometry.attributes.position, b=dust.userData.base;
   for(let i=0;i<dp.count;i++){dp.array[i*3+1]=(b[i*3+1]+t*0.25+Math.sin(t*.7+i)*0.15)%16;}
@@ -328,9 +330,9 @@ function update(t){
     if(!S.grp.visible){ continue; }
     // 人物卡進場
     const ka=eback(seg(u,0.1,1.0)), kb=eback(seg(u,0.3,1.2));
-    S.cardA.position.x=lerp(-11,-6.3,ka); S.cardB.position.x=lerp(11,6.3,kb);
+    S.cardA.position.x=lerp(-12,-7.0,ka); S.cardB.position.x=lerp(12,7.0,kb);
     // 柱狀
-    const fA=R.A.pct*0.11, fB=R.B.pct*0.11;
+    const fA=R.A.pct*0.098, fB=R.B.pct*0.098;
     const g1=eout(seg(u,0.8,2.2)), g2=eio(seg(u,4.2,5.6));
     const hA=lerp(R.poll[0]*g1,fA,g2), hB=lerp(R.poll[1]*g1,fB,g2);
     setBar(S.barA,hA); setBar(S.barB,hB);
@@ -357,7 +359,6 @@ function update(t){
       lowerOp=Math.max(lowerOp,vis); lowerTxt=R.title;
       phaseOp=vis*Math.min(fade(u,0.8,1.3,3.9,4.2)+fade(u,4.4,4.9,20,21),1);
       phaseTxt=u<4.2?'選前民調':'開票結果';
-      noteOp=vis*fade(u,1.4,2.0,3.9,4.2);
       const co=vis*seg(u,6.4,7.0);
       if(co>calloutOp){calloutOp=co; ov.cSub.textContent=R.calloutSub; ov.cBig.textContent=R.calloutBig;
         ov.callout.style.transform=`scale(${lerp(1.25,1,eout(seg(u,6.4,7.0)))})`;}
@@ -366,7 +367,7 @@ function update(t){
   if(lowerTxt) ov.lowerTtl.textContent=lowerTxt;
   ov.lower.style.opacity=lowerOp; ov.lower.style.transform=`translateX(${(1-lowerOp)*-60}px)`;
   ov.phase.textContent=phaseTxt; ov.phase.style.opacity=phaseOp;
-  ov.callout.style.opacity=calloutOp; ov.note.style.opacity=noteOp;
+  ov.callout.style.opacity=calloutOp;
   ov.source.style.opacity=Math.max(fade(t,8.4,9,13.3,14),fade(t,18.4,19,23.3,24));
   if(t<4||t>END_START){ if(!races.some(s=>s.grp.visible)){ov.lblA.style.opacity=0;ov.lblB.style.opacity=0;} }
 
@@ -391,7 +392,7 @@ function update(t){
       const i=bl.userData.i, s=3.0+i*0.22, p=eio(seg(e,s,s+1.1));
       const f=bl.userData.from, to=new THREE.Vector3(BOX.x+((i%3)-1)*0.4,BOX.h+0.4,BOX.z);
       const inside=seg(e,s+1.1,s+1.5);
-      bl.position.set(lerp(f.x,to.x,p), lerp(1.3,to.y,p)+Math.sin(Math.PI*p)*2.6 - inside*(BOX.h-0.2-i*0.02), lerp(f.z,to.z,p));
+      bl.position.set(lerp(f.x,to.x,p), lerp(1.3,to.y,p)+Math.sin(Math.PI*p)*1.2 - inside*(BOX.h-0.2-i*0.02), lerp(f.z,to.z,p));
       bl.rotation.set(0, p*Math.PI*2, p<1?Math.sin(p*9)*0.4:Math.PI/2);
       if(inside>0) bl.rotation.set(Math.PI/2,0,i*0.7);
       bl.visible=e>s-0.05; bl.material.opacity=ev;
@@ -415,6 +416,7 @@ window.__TOTAL=TOTAL;
 window.__setTime=t=>update(t);
 window.__ready=true;
 const params=new URLSearchParams(location.search);
+if(params.has('guide'))document.getElementById('guide').style.display='block';
 if(!params.has('render')){
   const t0=performance.now();
   const loop=()=>{const t=((performance.now()-t0)/1000)%TOTAL; update(t); requestAnimationFrame(loop);};

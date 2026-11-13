@@ -1,6 +1,7 @@
 # 2014 民調領先≠穩贏 3D CG
 
-- `2014_poll_upset_1080p.mp4`：成品影片（1920×1080、30fps、31 秒）
+- `2014_poll_upset_v1_滿版.mp4`：第一版（滿版，不可用）
+- `2014_poll_upset_v2_安全框.mp4`：第二版（留了天標、地標，但還不符合準則，見 CLAUDE.md）
 - `index.html`：Three.js 原始檔（用本機伺服器開啟即可預覽，例如 `python3 -m http.server`）
 
 ## 換上人物照片
