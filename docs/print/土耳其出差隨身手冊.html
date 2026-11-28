@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>土耳其出差隨身手冊</title>
+<style>
+  @page { size: A4; margin: 11mm 11mm 12mm; }
+  :root {
+    --navy: #1f2a44; --red: #c8102e; --ink: #1a1a1a; --mute: #5a5f6b;
+    --line: #c9ced8; --soft: #f2f4f8; --warm: #fbf6ee; --warn: #fff1f1;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font-family: "Noto Sans CJK TC", "Noto Sans TC", "WenQuanYi Zen Hei", sans-serif;
+         color: var(--ink); font-size: 9.6pt; line-height: 1.45; background: #fff; }
+  .page { page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  h1 { margin: 0; font-size: 19pt; letter-spacing: .02em; }
+  h2 { font-size: 12.5pt; margin: 10px 0 6px; padding-left: 8px; border-left: 4px solid var(--red); }
+  .masthead { background: var(--navy); color: #fff; padding: 12px 14px 10px; border-bottom: 4px solid var(--red); }
+  .masthead .sub { font-size: 9.5pt; opacity: .85; margin-bottom: 2px; }
+  .masthead .meta { font-size: 9.5pt; margin-top: 4px; opacity: .95; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border: 1px solid var(--line); padding: 4px 6px; vertical-align: top; text-align: left; }
+  th { background: var(--soft); font-weight: 700; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tag { display: inline-block; font-weight: 700; font-size: 8.3pt; padding: 0 5px; border-radius: 3px;
+         border: 1px solid currentColor; margin: 0 2px 2px 0; white-space: nowrap; }
+  .tv { color: var(--red); } .lg { color: var(--navy); } .st { color: #1d7a46; } .wr { color: #7a4b00; }
+  .box { border: 1px solid var(--line); padding: 6px 8px; border-radius: 4px; }
+  .warn { background: var(--warn); border-color: #e8b4b4; }
+  .note { color: var(--mute); font-size: 8.6pt; }
+  .chk { font-family: "Noto Sans CJK TC", sans-serif; }
+  ul { margin: 2px 0; padding-left: 16px; } li { margin: 1px 0; }
+  .cb li { list-style: none; margin-left: -14px; }
+  .cb li::before { content: "☐ "; }
+
+  /* 每日卡片 */
+  .day { display: grid; grid-template-columns: 62px 1fr 1.25fr; border: 1px solid var(--line);
+         border-left: 5px solid var(--navy); margin-bottom: 7px; break-inside: avoid; page-break-inside: avoid; }
+  .day.key { border-left-color: var(--red); }
+  .day > div { padding: 5px 7px; }
+  .date { background: var(--soft); text-align: center; }
+  .date .d { font-size: 15pt; font-weight: 800; line-height: 1.1; }
+  .date .w { font-size: 9pt; color: var(--mute); }
+  .date .n { font-size: 8pt; color: var(--mute); margin-top: 3px; }
+  .route { font-weight: 800; font-size: 10.5pt; margin-bottom: 2px; }
+  .flight { font-size: 8.6pt; background: var(--navy); color: #fff; display: inline-block; padding: 0 5px; border-radius: 3px; margin-bottom: 3px; }
+  .meals { font-size: 8.3pt; color: var(--mute); border-top: 1px dashed var(--line); margin-top: 3px; padding-top: 2px; }
+  .task { background: var(--warm); border-left: 1px solid var(--line); }
+  .task b.h { display: block; font-size: 8.6pt; color: var(--mute); margin-bottom: 1px; }
+  .alert { color: var(--red); font-weight: 700; }
+  .matrix td, .matrix th { text-align: center; padding: 3px 2px; font-size: 8.8pt; }
+  .matrix td:first-child, .matrix th:first-child { text-align: left; padding-left: 5px; }
+  .dot { font-weight: 800; }
+  .legend { font-size: 8.4pt; color: var(--mute); }
+  .foot { font-size: 8pt; color: var(--mute); margin-top: 6px; text-align: right; }
+  .fill { display: inline-block; border-bottom: 1px solid #888; min-width: 120px; }
+</style>
+</head>
+<body>
+
+<!-- ================= 第 1 頁：總覽 ================= -->
+<section class="page">
+  <div class="masthead">
+    <div class="sub">土耳其航空 × 雄獅 邀請 TVBS｜媒體團</div>
+    <h1>土耳其出差隨身手冊</h1>
+    <div class="meta">12/8（二）– 12/16（三）　台北 → 伊斯坦堡 → 安卡拉 → 卡帕多奇亞 → 伊斯坦堡 → 台北</div>
+  </div>
+
+  <div class="box warn" style="margin-top:8px">
+    <span class="alert">⚠ 日期已更改：</span>企劃書上寫 12/9–12/17，雄獅已改為 <b>12/8–12/16</b>（以本表為準）。
+    餐廳、住宿名稱雄獅會再另外更新。　<b>土耳其比台灣慢 5 小時。</b>
+  </div>
+
+  <h2>航班</h2>
+  <table>
+    <tr><th style="width:16%">日期</th><th style="width:14%">航班</th><th>航段</th><th style="width:30%">時間（當地）</th></tr>
+    <tr><td>12/8（二）</td><td>TK 25</td><td>台北 TPE → 伊斯坦堡 IST</td><td>22:00 起飛 → 隔天 05:50 抵達</td></tr>
+    <tr><td>12/9（三）</td><td>TK 2126</td><td>伊斯坦堡 IST → 安卡拉 ESB</td><td>08:00 → 09:10</td></tr>
+    <tr><td>12/12（六）</td><td>TK 2011</td><td>開塞利 ASR → 伊斯坦堡 IST</td><td>09:45 → 11:25</td></tr>
+    <tr><td>12/15（二）</td><td>TK 124</td><td>伊斯坦堡 IST → 台北 TPE</td><td>17:15 起飛 → 12/16 08:45 抵達</td></tr>
+  </table>
+
+  <h2>我要交的東西（企劃書）</h2>
+  <table>
+    <tr><th style="width:9%">代號</th><th style="width:15%">類型</th><th>題目</th><th style="width:20%">主要拍攝日</th><th style="width:6%">完成</th></tr>
+    <tr><td><span class="tag tv">TV1</span></td><td>電視專題 4'30"</td><td>綠色旅遊新浪潮！卡帕多奇亞地景保育與零廢棄旅遊（＋首都扶植弱勢與社會企業）</td><td>12/10、12/11（首都角度：12/9）</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag tv">TV2</span></td><td>電視專題 4'30"</td><td>公益村莊的自給自足奇蹟！直擊 LÖSEV 社會共融模式</td><td><b>只有 12/9</b></td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag tv">TV3</span></td><td>電視專題 4'30"</td><td>旅遊經濟救通膨？土耳其「綠色觀光」淘金術</td><td>全程累積</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag lg">L1</span></td><td>網路長版 8 分</td><td>【土耳其開箱】不只熱氣球！地下水宮、藍色清真寺零下雪景體驗</td><td>12/12</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag lg">L2</span></td><td>網路長版 8 分</td><td>【永續旅遊體驗】米其林綠星餐廳「全食材利用」</td><td class="alert">行程表上沒有</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag lg">L3</span></td><td>網路長版 8 分</td><td>橫跨歐亞的百年秘密！海峽遊船土耳其式早餐、古老隧道纜車（Tünel，1875 年）</td><td>12/13、12/14</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag st">S1</span></td><td>直式短影音</td><td>【土耳其特色美食開箱】道地家常菜（廚藝教室、市集小吃、冬季飲品）</td><td>12/10、12/13</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag st">S2</span></td><td>直式短影音</td><td>【伊斯坦堡商圈揭密】吉漢吉爾骨董街區＋卡拉科伊文青街區</td><td>12/14</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag st">S3</span></td><td>直式短影音</td><td>【伊斯坦堡商圈揭密】塔克辛與獨立大街、古驛站建築巡禮</td><td>12/13、12/14</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag wr">W1</span></td><td>網路圖文稿</td><td>【土耳其經濟觀察】通膨狀況＋觀光經濟是否有效？</td><td>全程累積</td><td class="chk">☐</td></tr>
+    <tr><td><span class="tag wr">W2</span></td><td>網路圖文稿</td><td>【綠色旅遊崛起】伊斯坦堡低碳旅遊融入百年生活日常</td><td>12/12–12/14</td><td class="chk">☐</td></tr>
+  </table>
+  <p class="note">短影音可提供其他節目使用，企劃寫明為「直式」。預計安排在<b>過年檔期</b>播出，與 COP31 區隔，所以冬天和新年的氣氛畫面要多拍。</p>
+
+  <div class="grid2" style="margin-top:6px">
+    <div class="box">
+      <b>天氣（12 月，約略）</b>
+      <ul>
+        <li>卡帕多奇亞、安卡拉：內陸高原，清晨常在 0 度以下，可能下雪</li>
+        <li>伊斯坦堡：濕冷多雨，很少下雪</li>
+        <li>低溫下電池掉很快，電池貼身保暖</li>
+      </ul>
+    </div>
+    <div class="box">
+      <b>聯絡人</b>（出發前填好）
+      <div style="margin-top:3px">雄獅領隊：<span class="fill"></span></div>
+      <div>當地導遊：<span class="fill"></span></div>
+      <div>台北編輯台：<span class="fill"></span></div>
+      <div>駐土耳其代表處（急難）：<span class="fill"></span></div>
+    </div>
+  </div>
+  <div class="foot">第 1 頁 / 共 4 頁</div>
+</section>
+
+<!-- ================= 第 2 頁：每日行程 12/8–12/11 ================= -->
+<section class="page">
+  <h2 style="margin-top:0">每日行程與我的任務（1）　安卡拉・卡帕多奇亞</h2>
+  <p class="legend">左：雄獅行程　右：我要拍的東西
+    <span class="tag tv">TV 電視專題</span><span class="tag lg">L 網路長版</span><span class="tag st">S 直式短版</span><span class="tag wr">W 圖文稿</span>　紅色邊框＝關鍵日</p>
+
+  <div class="day">
+    <div class="date"><div class="d">12/8</div><div class="w">週二</div><div class="n">第 1 天</div></div>
+    <div>
+      <div class="route">台北 → 伊斯坦堡</div>
+      <div class="flight">TK25　22:00 起飛</div>
+      <div>夜間航班</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <ul>
+        <li>機場、登機、出發畫面（直式＋橫式）<span class="tag st">S</span></li>
+        <li><b>飛機上把所有電池、行動電源充飽</b>，記憶卡清空、分好卡</li>
+        <li>把 12/9 LÖSEV 的訪綱看過一遍，盡量睡覺</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day key">
+    <div class="date"><div class="d">12/9</div><div class="w">週三</div><div class="n">第 2 天</div></div>
+    <div>
+      <div class="route">伊斯坦堡 → 安卡拉 → 卡帕多奇亞</div>
+      <div class="flight">05:50 抵 IST ／ TK2126 08:00 → 09:10 ESB</div>
+      <ul><li>LÖSEV 病童中心</li><li>車程前往卡帕多奇亞</li></ul>
+      <div class="meals">住：卡帕多奇亞洞穴飯店｜早：機上｜午：病童中心｜晚：飯店</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <span class="tag tv">TV2</span><span class="tag tv">TV1 首都角度</span><span class="tag wr">W1</span>
+      <ul>
+        <li><b>TV2 只有今天能拍</b>：基金會受訪、病童家庭／弱勢婦女的有機農業與手工藝、村莊全景</li>
+        <li>TV1 首都角度：首都如何扶植弱勢與社會企業（LÖSEV 商店、咖啡廳）</li>
+        <li>午餐在病童中心吃，順便拍餐點、員工</li>
+        <li>車程中拍安卡拉街景和高原景色</li>
+      </ul>
+      <div class="alert">⚠ 拍攝前先問清楚哪些人可以拍臉；未成年要家長同意</div>
+      <div class="alert">⚠ 紅眼班機＋轉機，體力最吃緊的一天</div>
+    </div>
+  </div>
+
+  <div class="day key">
+    <div class="date"><div class="d">12/10</div><div class="w">週四</div><div class="n">第 3 天</div></div>
+    <div>
+      <div class="route">卡帕多奇亞</div>
+      <ul>
+        <li>熱氣球（看天候）</li>
+        <li>當地人家料理教室</li>
+        <li>洞穴酒窖品酒（土耳其原生葡萄品種）</li>
+        <li>阿瓦諾斯小鎮（小吃品嘗）</li>
+      </ul>
+      <div class="meals">住：洞穴飯店｜早：飯店｜午：料理教室｜晚：飯店</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <span class="tag tv">TV1</span><span class="tag tv">TV3</span><span class="tag st">S1</span><span class="tag wr">W1</span>
+      <ul>
+        <li><b>熱氣球第 1 次機會</b>：升空全景＋搭乘第一人稱，直式也要拍</li>
+        <li>料理教室：農家食材→觀光收入回到在地（TV1）、做菜過程（S1）</li>
+        <li>阿瓦諾斯：小吃價格、市集買氣，<b>拍價目表</b>（TV3、W1）</li>
+        <li>受訪：熱氣球業者、料理教室主人</li>
+      </ul>
+      <div class="note">品酒畫面：台灣播出要注意酒類相關規範，先問主管拍法</div>
+    </div>
+  </div>
+
+  <div class="day key">
+    <div class="date"><div class="d">12/11</div><div class="w">週五</div><div class="n">第 4 天</div></div>
+    <div>
+      <div class="route">卡帕多奇亞</div>
+      <ul>
+        <li>熱氣球景拍攝（看天候）</li>
+        <li>蘑菇岩</li>
+        <li>卡亞謝希爾地下城（石城）</li>
+        <li>當地農家體驗（依季節調整）</li>
+      </ul>
+      <div class="meals">住：洞穴飯店｜早：飯店｜午：當地餐廳｜晚：飯店</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <span class="tag tv">TV1 主力日</span><span class="tag tv">TV3</span><span class="tag st">S</span>
+      <ul>
+        <li><b>熱氣球第 2 次機會</b>（昨天沒飛就今天補）</li>
+        <li>蘑菇岩：風化、侵蝕現況特寫；地下城：遊客人數、承載量管制</li>
+        <li>農家體驗：小農經濟、採收</li>
+        <li><b>今天要把 TV1 的受訪拍齊</b>（保育單位／專家、農民）</li>
+        <li>看到雪就拍起來，給 L1 當備用</li>
+      </ul>
+      <div class="note">10/29 格雷梅的「精靈煙囪」才發生崩塌，可順便拍現況和安全措施</div>
+    </div>
+  </div>
+  <div class="foot">第 2 頁 / 共 4 頁</div>
+</section>
+
+<!-- ================= 第 3 頁：每日行程 12/12–12/16 ================= -->
+<section class="page">
+  <h2 style="margin-top:0">每日行程與我的任務（2）　伊斯坦堡</h2>
+
+  <div class="day key">
+    <div class="date"><div class="d">12/12</div><div class="w">週六</div><div class="n">第 5 天</div></div>
+    <div>
+      <div class="route">卡帕多奇亞 → 伊斯坦堡</div>
+      <div class="flight">TK2011 09:45 ASR → 11:25 IST</div>
+      <ul>
+        <li>外觀拍照：藍色清真寺</li>
+        <li>外觀拍照：聖索菲亞（整修中）</li>
+        <li>賽馬場廣場</li>
+        <li>地下水宮、地下水宮下午茶</li>
+      </ul>
+      <div class="meals">住：伊斯坦堡飯店｜早：飯店｜午：機上｜晚：當地餐廳</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <span class="tag lg">L1 主力日</span><span class="tag tv">TV3</span><span class="tag st">S1</span><span class="tag wr">W2</span>
+      <ul>
+        <li>L1：藍色清真寺六根宣禮塔、圓頂、庭院噴泉、石板路</li>
+        <li>聖索菲亞整修中＝企劃的「世界遺產修復」角度（TV3）</li>
+        <li>地下水宮：光影、柱子、下午茶（S1）</li>
+        <li>一早要趕飛機，日出時可在飯店頂樓遠拍熱氣球</li>
+      </ul>
+      <div class="alert">⚠ 沒下雪的話，L1 改用「冬日／雨中老城」版本</div>
+    </div>
+  </div>
+
+  <div class="day key">
+    <div class="date"><div class="d">12/13</div><div class="w">週日</div><div class="n">第 6 天</div></div>
+    <div>
+      <div class="route">伊斯坦堡</div>
+      <ul>
+        <li>海峽遊船土耳其式早餐（2 小時）</li>
+        <li>蘇萊曼清真寺</li>
+        <li>有頂大市集（小吃品嘗）</li>
+        <li>古驛站建築巡禮</li>
+        <li>水菸館體驗、冬季特色飲品</li>
+      </ul>
+      <div class="meals">住：伊斯坦堡飯店｜早：飯店｜午：小吃｜晚：當地餐廳</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <span class="tag lg">L3</span><span class="tag st">S1</span><span class="tag st">S3</span><span class="tag tv">TV3</span><span class="tag wr">W1</span><span class="tag wr">W2</span>
+      <ul>
+        <li>L3：遊船早餐、兩岸歐亞景色、記者出鏡</li>
+        <li>市集：買氣、價格、攤商受訪（通膨）</li>
+        <li>古驛站建築（S3）；冬季飲品 salep／boza（S1）</li>
+        <li>渡輪＝低碳交通，可用在 W2</li>
+      </ul>
+      <div class="alert">⚠ 12/13 是星期日，有頂大市集通常週日不開 → 請雄獅確認</div>
+      <div class="note">水菸館：台灣播出要注意菸害相關規範，先問主管</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><div class="d">12/14</div><div class="w">週一</div><div class="n">第 7 天</div></div>
+    <div>
+      <div class="route">伊斯坦堡</div>
+      <ul>
+        <li>古老隧道纜車（Tünel）</li>
+        <li>外觀拍照：加拉達塔</li>
+        <li>塔克辛與獨立大街（小吃品嘗）</li>
+        <li>吉漢吉爾骨董街區、卡拉科伊文青街區</li>
+      </ul>
+      <div class="meals">住：伊斯坦堡飯店｜早：飯店｜午：小吃｜晚：當地餐廳</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <span class="tag lg">L3</span><span class="tag st">S2 主力日</span><span class="tag st">S3</span><span class="tag wr">W2</span>
+      <ul>
+        <li>Tünel：車廂、月台、1875 年歷史、票價（L3）</li>
+        <li>獨立大街懷舊電車、人潮、小吃（S3）</li>
+        <li>吉漢吉爾、卡拉科伊：店家受訪、街景（S2）</li>
+        <li>一天跑很多點，<b>短版邊走邊拍直式</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><div class="d">12/15</div><div class="w">週二</div><div class="n">第 8 天</div></div>
+    <div>
+      <div class="route">伊斯坦堡 → 台北</div>
+      <ul>
+        <li>土耳其咖啡＆現代文青咖啡體驗</li>
+        <li>保留彈性調整時間</li>
+        <li>前往機場</li>
+      </ul>
+      <div class="flight">TK124　17:15 起飛</div>
+      <div class="meals">住：機上｜早：飯店｜午：當地餐廳｜晚：機上</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <span class="tag st">S1</span><span class="tag wr">補拍</span>
+      <ul>
+        <li>土耳其咖啡煮法、咖啡占卜（S1）</li>
+        <li><b>彈性時間＝補拍</b>：對照第 4 頁的交付表，把缺的畫面補齊</li>
+        <li>上機前素材備份兩份（硬碟＋另一顆）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><div class="d">12/16</div><div class="w">週三</div><div class="n">第 9 天</div></div>
+    <div>
+      <div class="route">抵達台北</div>
+      <div class="flight">08:45 抵 TPE</div>
+    </div>
+    <div class="task">
+      <b class="h">我的任務</b>
+      <ul><li>交素材、交拍攝紀錄給編輯台與網新</li></ul>
+    </div>
+  </div>
+  <div class="foot">第 3 頁 / 共 4 頁</div>
+</section>
+
+<!-- ================= 第 4 頁：交付對照、提醒、建議 ================= -->
+<section class="page">
+  <h2 style="margin-top:0">交付對照表（哪一天拍哪一項）</h2>
+  <table class="matrix">
+    <tr><th style="width:30%">產出</th><th>12/9</th><th>12/10</th><th>12/11</th><th>12/12</th><th>12/13</th><th>12/14</th><th>12/15</th></tr>
+    <tr><td><span class="tag tv">TV1</span>卡帕多奇亞保育</td><td>○</td><td class="dot">●</td><td class="dot">●</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><span class="tag tv">TV2</span>LÖSEV</td><td class="dot">●</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><span class="tag tv">TV3</span>綠色觀光救通膨</td><td></td><td>○</td><td>○</td><td>○</td><td class="dot">●</td><td>○</td><td></td></tr>
+    <tr><td><span class="tag lg">L1</span>水宮、藍色清真寺</td><td></td><td></td><td>雪景備用</td><td class="dot">●</td><td></td><td></td><td></td></tr>
+    <tr><td><span class="tag lg">L2</span>米其林綠星</td><td colspan="7" class="alert">行程表上沒有，待確認</td></tr>
+    <tr><td><span class="tag lg">L3</span>遊船早餐、Tünel</td><td></td><td></td><td></td><td></td><td class="dot">●</td><td class="dot">●</td><td></td></tr>
+    <tr><td><span class="tag st">S1</span>美食開箱</td><td></td><td class="dot">●</td><td></td><td>○</td><td class="dot">●</td><td>○</td><td>○</td></tr>
+    <tr><td><span class="tag st">S2</span>吉漢吉爾＋卡拉科伊</td><td></td><td></td><td></td><td></td><td></td><td class="dot">●</td><td></td></tr>
+    <tr><td><span class="tag st">S3</span>塔克辛＋古驛站</td><td></td><td></td><td></td><td></td><td class="dot">●</td><td class="dot">●</td><td></td></tr>
+    <tr><td><span class="tag wr">W1</span>通膨觀光經濟</td><td>○</td><td>○</td><td>○</td><td>○</td><td class="dot">●</td><td>○</td><td></td></tr>
+    <tr><td><span class="tag wr">W2</span>綠色旅遊崛起</td><td></td><td></td><td></td><td>○</td><td class="dot">●</td><td class="dot">●</td><td></td></tr>
+  </table>
+  <p class="legend">● 主力拍攝日　○ 順便累積素材　每天晚上回飯店，在這張表上打勾</p>
+
+  <div class="grid2">
+    <div>
+      <h2>出發前要確認（找雄獅、公司）</h2>
+      <ul class="cb">
+        <li><b>有頂大市集 12/13 週日是否營業</b>；不行就改到 12/14 或其他市集</li>
+        <li><b>L2 米其林綠星餐廳</b>是哪一家、哪一天去</li>
+        <li><b>TV1 受訪</b>：保育單位／專家、農民</li>
+        <li><b>TV3 受訪</b>：飯店業者、在地居民、經濟數據來源</li>
+        <li>LÖSEV 的拍攝範圍與肖像同意</li>
+        <li>記者簽證、臨時記者證（電子簽證只限旅遊、商務）</li>
+        <li>攝影器材入境申報</li>
+        <li>空拍：是否由當地持照飛手協助；<b>自己的 DJI 先不要飛</b></li>
+        <li>贊助揭露方式（報導是否標註協助單位）</li>
+        <li>品酒、水菸畫面的播出規範</li>
+        <li>出發前查好土耳其最新通膨、觀光數據（W1、TV3 用）</li>
+      </ul>
+    </div>
+    <div>
+      <h2>天候與狀況備案</h2>
+      <ul>
+        <li><b>熱氣球兩天都停飛</b> → 改拍業者和遊客等待、停飛的故事（停飛本身就是新聞）</li>
+        <li><b>伊斯坦堡沒下雪</b> → L1 用卡帕多奇亞的雪景，或改成「雨中老城」版本</li>
+        <li><b>市集週日沒開</b> → 改拍香料市集或街頭小吃</li>
+        <li><b>受訪對象沒排到</b> → 請導遊翻譯，現場街訪攤商、飯店員工</li>
+      </ul>
+      <h2>每天的固定工作</h2>
+      <ul>
+        <li>同一個場景<b>橫式＋直式都拍</b>（一魚多吃）</li>
+        <li>每個價格<b>拍到價目表</b>，記下里拉金額和當天匯率</li>
+        <li>每天至少一位<b>在地受訪者</b>，一句可以放標題的金句</li>
+        <li>多拍冬天、新年氣氛（過年檔期播出）</li>
+        <li>晚上：素材備份兩份、電池充電、填交付對照表</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>拍攝注意</h2>
+  <div class="grid2">
+    <ul>
+      <li>清真寺：禮拜時間不拍，女性要包頭巾，不拍禮拜中信徒的臉</li>
+      <li>街訪拍人臉前先徵求同意；遇到警察要求就停拍</li>
+    </ul>
+    <ul>
+      <li>隨身帶公司英文採訪公函、護照影本</li>
+      <li>飯店、景點的空拍：<b>沒有許可一律不飛</b>，罰款可能超過 2,000 美元</li>
+    </ul>
+  </div>
+  <div class="foot">第 4 頁 / 共 4 頁　｜　依雄獅行程總表（11/23 版）與 TVBS 出差企劃整理</div>
+</section>
+
+</body>
+</html>
