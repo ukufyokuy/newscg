@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>土耳其足跡地圖與生活指南</title>
+<style>
+  @page { size: A4; margin: 10mm 11mm 11mm; }
+  :root { --navy:#1f2a44; --red:#c8102e; --green:#1d7a46; --purple:#7b3fa0; --gold:#b8860b;
+          --ink:#1a1a1a; --mute:#5a5f6b; --line:#c9ced8; --soft:#f2f4f8; --warm:#fbf6ee; --warn:#fff1f1; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin:0; font-family:"Noto Sans CJK TC","Noto Sans TC","WenQuanYi Zen Hei",sans-serif; color:var(--ink);
+         font-size:9.4pt; line-height:1.45; background:#fff; }
+  .page { page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  h1 { margin:0; font-size:18pt; }
+  h2 { font-size:12.2pt; margin:9px 0 5px; padding-left:8px; border-left:4px solid var(--red); }
+  h3 { font-size:10.4pt; margin:7px 0 3px; color:var(--navy); }
+  .masthead { background:var(--navy); color:#fff; padding:10px 14px 9px; border-bottom:4px solid var(--red); }
+  .masthead .sub { font-size:9pt; opacity:.85; }
+  .masthead .meta { font-size:9pt; margin-top:3px; }
+  img.map { width:100%; border:1px solid var(--line); border-radius:4px; display:block; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { border:1px solid var(--line); padding:3px 5px; vertical-align:top; text-align:left; }
+  th { background:var(--soft); }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px; }
+  .box { border:1px solid var(--line); border-radius:4px; padding:5px 8px; }
+  .warn { background:var(--warn); border-color:#e8b4b4; }
+  .warm { background:var(--warm); }
+  .alert { color:var(--red); font-weight:700; }
+  .note { color:var(--mute); font-size:8.4pt; }
+  ul { margin:2px 0; padding-left:15px; } li { margin:1px 0; }
+  .strip { display:grid; grid-template-columns:repeat(9,1fr); border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-top:6px; }
+  .strip div { padding:4px 3px; text-align:center; font-size:8.3pt; border-right:1px solid var(--line); }
+  .strip div:last-child { border-right:0; }
+  .strip b { display:block; font-size:10pt; }
+  .c-ist { background:#eef1f7; } .c-cap { background:#e9f4ee; } .c-fly { background:#fdeeee; }
+  .tl td:first-child { width:78px; white-space:nowrap; font-weight:700; color:var(--navy); }
+  .tl td.t2 { width:auto; }
+  .tl tr.hd td { background:var(--navy); color:#fff; font-weight:700; font-size:10pt; }
+  .tl tr.hd td span { font-weight:400; opacity:.9; margin-left:8px; font-size:8.8pt; }
+  .tl .job { color:var(--red); font-weight:700; }
+  .tl .sun { color:var(--gold); font-weight:700; }
+  .food { table-layout:fixed; }
+  .food td:nth-child(2), .food th:nth-child(2) { font-style:italic; width:30%; }
+  .food td:first-child, .food th:first-child { font-weight:700; width:23%; }
+  .tag { display:inline-block; font-weight:700; font-size:7.8pt; padding:0 4px; border-radius:3px; border:1px solid currentColor; white-space:nowrap; }
+  .tv { color:var(--red); } .lg { color:var(--navy); } .st { color:var(--green); } .wr { color:#7a4b00; }
+  .foot { font-size:7.8pt; color:var(--mute); text-align:right; margin-top:4px; }
+  .cb li { list-style:none; margin-left:-13px; } .cb li::before { content:"☐ "; }
+  .wx td, .wx th { text-align:center; } .wx td:first-child, .wx th:first-child { text-align:left; }
+</style>
+</head>
+<body>
+
+<!-- ===== 第 1 頁：全國足跡 ===== -->
+<section class="page">
+  <div class="masthead">
+    <div class="sub">土耳其航空 × 雄獅 邀請 TVBS｜第一次去土耳其也不用怕</div>
+    <h1>土耳其足跡地圖與生活指南</h1>
+    <div class="meta">12/8（二）– 12/16（三）｜伊斯坦堡 → 安卡拉 → 卡帕多奇亞 → 伊斯坦堡｜土耳其時間＝台灣時間減 5 小時</div>
+  </div>
+
+  <div class="strip">
+    <div class="c-fly"><b>12/8</b>二<br>台北出發<br>機上過夜</div>
+    <div class="c-cap"><b>12/9</b>三<br>安卡拉 LÖSEV<br>→卡帕多奇亞</div>
+    <div class="c-cap"><b>12/10</b>四<br>卡帕多奇亞<br>熱氣球①</div>
+    <div class="c-cap"><b>12/11</b>五<br>卡帕多奇亞<br>熱氣球②</div>
+    <div class="c-ist"><b>12/12</b>六<br>飛伊斯坦堡<br>老城遺產</div>
+    <div class="c-ist"><b>12/13</b>日<br>伊斯坦堡<br>遊船・市集</div>
+    <div class="c-ist"><b>12/14</b>一<br>伊斯坦堡<br>Tünel・街區</div>
+    <div class="c-ist"><b>12/15</b>二<br>咖啡・補拍<br>17:15 起飛</div>
+    <div class="c-fly"><b>12/16</b>三<br>08:45<br>抵台北</div>
+  </div>
+
+  <h2>全程足跡</h2>
+  <img class="map" src="maps/turkey.svg" alt="土耳其全程足跡地圖">
+
+  <div class="grid3" style="margin-top:7px">
+    <div class="box"><b>住宿（共 6 晚＋2 晚機上）</b>
+      <ul><li>12/8：機上</li><li>12/9–12/11：卡帕多奇亞洞穴飯店 3 晚</li><li>12/12–12/14：伊斯坦堡飯店 3 晚</li><li>12/15：機上</li></ul>
+      <div class="note">飯店名稱雄獅會再更新</div>
+    </div>
+    <div class="box"><b>移動最累的兩天</b>
+      <ul><li><b>12/9</b>：紅眼航班 → 轉機 → LÖSEV 拍一整天 → 坐車 3.5–4 小時</li><li><b>12/12</b>：一早出發往機場 → 飛伊斯坦堡 → 下午直接拍老城</li></ul>
+    </div>
+    <div class="box"><b>三個城市的感覺</b>
+      <ul><li><b>安卡拉</b>：首都，政府機關多，乾冷</li><li><b>卡帕多奇亞</b>：高原、奇岩、熱氣球，最冷</li><li><b>伊斯坦堡</b>：大城市、海港，濕冷多雨、人多</li></ul>
+    </div>
+  </div>
+  <div class="foot">第 1 頁 / 共 7 頁</div>
+</section>
+
+<!-- ===== 第 2 頁：卡帕多奇亞 ===== -->
+<section class="page">
+  <h2 style="margin-top:0">卡帕多奇亞（12/9 晚 – 12/12 早）</h2>
+  <img class="map" src="maps/cappadocia.svg" alt="卡帕多奇亞示意圖" style="max-height:92mm;object-fit:contain">
+
+  <div class="grid2" style="margin-top:6px">
+    <div>
+      <h3>天氣（12 月，歷年約略平均）</h3>
+      <table class="wx">
+        <tr><th>項目</th><th>卡帕多奇亞</th><th>安卡拉</th></tr>
+        <tr><td>白天最高</td><td>約 4–6°C</td><td>約 5–6°C</td></tr>
+        <tr><td>清晨最低</td><td>約 −4～−5°C</td><td>約 −2～−3°C</td></tr>
+        <tr><td>日出／日落</td><td>07:47 ／ 17:20</td><td>07:58 ／ 17:24</td></tr>
+        <tr><td>天氣型態</td><td>乾冷，可能下雪、結冰</td><td>乾冷，可能起霧、下雪</td></tr>
+      </table>
+      <p class="note">海拔約 1,000–1,300 公尺。熱氣球時段在籃子裡吹風，體感可能 −5～−10°C。白天只有約 9.5 小時，<b>下午 5 點前就要拍完外景</b>。出發前一週再看實際預報。</p>
+
+      <h3>熱氣球怎麼進行（一般流程）</h3>
+      <table>
+        <tr><td style="width:30%">前一天晚上</td><td>業者看隔天風況，<b>決定飛不飛</b>，通知集合時間</td></tr>
+        <tr><td>約 05:30–06:00</td><td>飯店接駁（天還很黑）</td></tr>
+        <tr><td>約 06:30–07:30</td><td>起飛場地喝熱茶、看充氣（<b>火焰、巨大球體：好畫面</b>）</td></tr>
+        <tr><td>日出 07:47 前後</td><td>升空，飛行約 1 小時</td></tr>
+        <tr><td>約 09:00</td><td>落地，慶祝儀式、發證書，送回飯店</td></tr>
+      </table>
+      <p class="note">冬天風雪多，停飛很常見；停飛時改到觀景點從地面拍。籃子空間小，<b>只帶手持相機或手機＋穩定器</b>，不帶腳架、不換鏡頭。</p>
+    </div>
+    <div>
+      <h3>每個地點要知道的事</h3>
+      <ul>
+        <li><b>格雷梅</b>：熱氣球的主要起飛區，飯店多在附近。10/29 這裡的「精靈煙囪」才發生崩塌，可拍現況。</li>
+        <li><b>阿瓦諾斯</b>：紅河旁的小鎮，以<b>陶藝</b>聞名，有陶藝工坊、市集小吃，適合拍價格和買氣。</li>
+        <li><b>蘑菇岩（帕夏貝）</b>：一柱多頂的蘑菇狀岩石，最能呈現<b>風化侵蝕</b>。</li>
+        <li><b>卡亞謝希爾地下城</b>：在內夫謝希爾市區，多層地下通道。<b>通道窄、要彎腰、光線很暗</b>，器材背緊，準備補光燈。</li>
+        <li><b>洞穴酒窖</b>：利用火山岩洞恆溫存酒。行程寫「土耳其原生葡萄品種」，可問 Emir（白酒）、Öküzgözü、Boğazkere（紅酒）。</li>
+        <li><b>料理教室、農家體驗</b>：在地家庭，正好拍「觀光收入回到小農」（TV1）。</li>
+      </ul>
+      <div class="box warn" style="margin-top:6px">
+        <b>⚠ 卡帕多奇亞注意</b>
+        <ul>
+          <li><b>熱氣球時段禁止飛空拍機</b>，被抓到會重罰</li>
+          <li>奇岩區步道結冰濕滑，穿防滑鞋</li>
+          <li>寶石店、地毯店常是購物站，不要被推銷（2023 年有台灣旅客買到假蘇丹石）</li>
+          <li>夜晚很冷，飯店暖氣乾，<b>電池晚上放室內充電</b>，不要留在車上</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot">第 2 頁 / 共 7 頁</div>
+</section>
+
+<!-- ===== 第 3 頁：伊斯坦堡 ===== -->
+<section class="page">
+  <h2 style="margin-top:0">伊斯坦堡（12/12 下午 – 12/15）</h2>
+  <img class="map" src="maps/istanbul.svg" alt="伊斯坦堡足跡示意圖">
+  <p class="note" style="margin:2px 0 0">示意圖，位置約略、非實際比例。號碼＝當天建議的參觀順序。</p>
+
+  <div class="grid2" style="margin-top:5px">
+    <div>
+      <h3>天氣（12 月，歷年約略平均）</h3>
+      <table class="wx">
+        <tr><th>項目</th><th>伊斯坦堡</th></tr>
+        <tr><td>白天最高／清晨最低</td><td>約 10–11°C ／ 約 5–6°C</td></tr>
+        <tr><td>日出／日落</td><td><b>08:19 ／ 17:36</b>（日出很晚）</td></tr>
+        <tr><td>天氣型態</td><td>濕冷、多雨、海邊風大，很少下雪</td></tr>
+      </table>
+      <p class="note">溫度比卡帕多奇亞高，但又濕又有風，體感很冷。雨具、防雨罩每天都要帶。</p>
+
+      <h3>城市分區（地圖上看）</h3>
+      <ul>
+        <li><b>舊城區（歷史半島）</b>：藍色清真寺、聖索菲亞、地下水宮、大市集、蘇萊曼清真寺都在這裡，走路可到</li>
+        <li><b>金角灣</b>：把舊城和新城隔開，靠加拉達橋相連</li>
+        <li><b>新城區（貝伊奧盧）</b>：加拉達塔、Tünel、獨立大街、塔克辛、吉漢吉爾、卡拉科伊</li>
+        <li><b>博斯普魯斯海峽</b>：分開歐洲和亞洲，12/13 遊船航行這裡</li>
+      </ul>
+    </div>
+    <div>
+      <h3>每個地點要知道的事</h3>
+      <ul>
+        <li><b>藍色清真寺</b>：<b>禮拜時間暫停參觀</b>，現場看告示；女性包頭巾，脫鞋</li>
+        <li><b>聖索菲亞</b>：行程是外觀拍照，目前整修中，正好用在「世界遺產修復」</li>
+        <li><b>地下水宮</b>：地下蓄水池，光線暗、地面濕，有梅杜莎頭像柱</li>
+        <li><b>有頂大市集</b>：<span class="alert">12/13 是星期日，一般週日不開</span>，請領隊確認；裡面扒手多</li>
+        <li><b>蘇萊曼清真寺</b>：在山丘上，可俯瞰金角灣，景色好</li>
+        <li><b>古驛站</b>：大市集周邊的古代商旅客棧（Han），部分有屋頂可看城市</li>
+        <li><b>Tünel</b>：1875 年通車的地下纜車，只有兩站，車程約 1.5 分鐘，要用伊斯坦堡卡</li>
+        <li><b>獨立大街</b>：步行街，有懷舊紅色電車，人潮多、<b>扒手多</b></li>
+        <li><b>12/15 往機場</b>：國際線提前 3 小時到，市區到機場 45–75 分鐘，<b>最晚 13:30–14:00 出發</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot">第 3 頁 / 共 7 頁</div>
+</section>
+
+<!-- ===== 第 4 頁：每日時間表 1 ===== -->
+<section class="page">
+  <h2 style="margin-top:0">每日詳細時間表（1）</h2>
+  <p class="note" style="margin:0 0 4px">時間除了航班以外都是<b>我的預估</b>，以領隊當天公布為準。<span class="sun">☀</span>＝日出日落，<span class="job">紅字</span>＝我的拍攝任務。</p>
+  <table class="tl">
+    <tr class="hd"><td colspan="2">12/8（二）台北 → 伊斯坦堡<span>機上過夜</span></td></tr>
+    <tr><td>18:30–19:00</td><td>抵桃園機場（請確認航廈），報到托運。<b>備用鋰電池、行動電源一律隨身，不能托運</b>；100Wh 以下一般可帶，100–160Wh 要航空公司同意且通常限 2 顆，超過 160Wh 不能帶（V 型電池先看標示）</td></tr>
+    <tr><td>報到時</td><td>貴重攝影器材可先向海關辦理<b>出境登記</b>，回國時才不會被當成在國外買的</td></tr>
+    <tr><td>22:00</td><td>TK25 起飛，飛行約 12 小時 50 分。上機後把手錶調成土耳其時間；<b>電池全部充飽</b>，盡量睡</td></tr>
+
+    <tr class="hd"><td colspan="2">12/9（三）伊斯坦堡 → 安卡拉 → 卡帕多奇亞<span>最累的一天｜早餐機上・午餐病童中心・晚餐飯店</span></td></tr>
+    <tr><td>05:50</td><td>抵伊斯坦堡機場，<b>在這裡入境土耳其</b>（護照、簽證、記者證件）。照領隊指示：行李是否直掛安卡拉、器材在哪裡申報</td></tr>
+    <tr><td>08:00 → 09:10</td><td>TK2126 國內線飛安卡拉（只有 1 小時 10 分）</td></tr>
+    <tr><td>約 10:00–15:00</td><td>LÖSEV 病童中心，含午餐。<span class="job">TV2 只有今天：基金會受訪、病童家庭與婦女的農業和手工藝、村莊全景、LÖSEV 商店與咖啡廳；TV1 首都扶植社會企業角度</span></td></tr>
+    <tr><td>開拍前</td><td class="alert">先跟基金會確認哪些人可以拍臉；未成年要家長同意；不要拍病童痛苦的特寫</td></tr>
+    <tr><td>約 15:00–18:30</td><td>車程約 300 公里、3.5–4 小時到卡帕多奇亞。<span class="sun">☀ 日落 17:20</span>，到的時候天已經黑。<span class="job">車上拍高原景色、在車上補睡</span></td></tr>
+    <tr><td>晚上</td><td>飯店晚餐。<b>問領隊明早熱氣球飛不飛、幾點集合</b>；備份素材、充電、準備保暖衣物</td></tr>
+
+    <tr class="hd"><td colspan="2">12/10（四）卡帕多奇亞<span>熱氣球第 1 次機會｜早餐飯店・午餐料理教室・晚餐飯店</span></td></tr>
+    <tr><td>約 05:30–06:00</td><td>熱氣球接駁（如果起飛）。穿最厚的衣服、戴毛帽手套</td></tr>
+    <tr><td>約 06:30–07:30</td><td><span class="job">拍充氣、火焰、地面工作人員，橫式＋直式</span></td></tr>
+    <tr><td>07:47</td><td><span class="sun">☀ 日出</span>，升空約 1 小時。<span class="job">第一人稱、滿天熱氣球、記者出鏡一段（TV1、S）</span>；<span class="job">訪業者：一天幾顆、票價怎麼算、停飛怎麼辦（TV3、W1）</span></td></tr>
+    <tr><td>約 09:00–10:00</td><td>回飯店早餐</td></tr>
+    <tr><td>約 10:30–14:00</td><td>當地人家料理教室（含午餐）。<span class="job">做菜過程（S1）、食材從哪來、觀光收入回到農家（TV1）、受訪主人</span></td></tr>
+    <tr><td>約 14:30–16:00</td><td>洞穴酒窖品酒。<span class="job">洞穴恆溫、原生葡萄品種</span><span class="note">（台灣播出要注意酒類規範）</span></td></tr>
+    <tr><td>約 16:00–17:20</td><td>阿瓦諾斯小鎮小吃。<span class="job">拍價目表、市集買氣、攤商受訪（TV3、W1）</span>　<span class="sun">☀ 日落 17:20</span></td></tr>
+    <tr><td>晚上</td><td>飯店晚餐；備份、充電；確認明早要不要補搭熱氣球</td></tr>
+
+    <tr class="hd"><td colspan="2">12/11（五）卡帕多奇亞<span>熱氣球第 2 次機會・TV1 主力日｜早餐飯店・午餐當地餐廳・晚餐飯店</span></td></tr>
+    <tr><td>約 06:45–08:30</td><td>地面觀景點拍熱氣球（<span class="sun">☀ 日出 07:48</span>）。<span class="job">昨天沒飛的話，今天就是最後機會</span></td></tr>
+    <tr><td>約 09:00</td><td>飯店早餐</td></tr>
+    <tr><td>約 10:00–12:00</td><td>蘑菇岩。<span class="job">風化、侵蝕特寫；遊客承載量管制；保育專家受訪（TV1）</span></td></tr>
+    <tr><td>約 12:30</td><td>當地餐廳午餐。<span class="job">陶罐燉肉敲罐畫面（S1）</span></td></tr>
+    <tr><td>約 14:00–15:30</td><td>卡亞謝希爾地下城。<span class="job">通道、遊客數（TV1）；暗處用補光、高感光度</span></td></tr>
+    <tr><td>約 15:30–17:20</td><td>當地農家體驗（依季節）。<span class="job">小農經濟、採收（TV1）</span>　<span class="sun">☀ 日落 17:20</span></td></tr>
+    <tr><td>晚上</td><td><b>今天要把 TV1 的受訪補齊</b>；打包行李（明早很早出發）、全部充電</td></tr>
+  </table>
+  <div class="foot">第 4 頁 / 共 7 頁</div>
+</section>
+
+<!-- ===== 第 5 頁：每日時間表 2 ===== -->
+<section class="page">
+  <h2 style="margin-top:0">每日詳細時間表（2）</h2>
+  <table class="tl">
+    <tr class="hd"><td colspan="2">12/12（六）卡帕多奇亞 → 伊斯坦堡<span>早餐飯店・午餐「搭機」（自備點心）・晚餐當地餐廳</span></td></tr>
+    <tr><td>約 06:30</td><td>早餐、退房</td></tr>
+    <tr><td>約 07:15–07:30</td><td>出發往開塞利機場，車程約 1 小時。<span class="sun">☀ 日出 07:49</span>，<span class="job">路上如果看到熱氣球就拍</span></td></tr>
+    <tr><td>09:45 → 11:25</td><td>TK2011 飛伊斯坦堡。<b>午餐欄寫「搭機」，國內線餐點可能很少，先買麵包、水果</b></td></tr>
+    <tr><td>約 11:30–13:00</td><td>領行李，車程 45–75 分鐘到舊城、放行李</td></tr>
+    <tr><td>約 13:30–15:00</td><td>藍色清真寺、聖索菲亞外觀、賽馬場廣場。<span class="job">L1 主力：宣禮塔、圓頂、庭院噴泉、石板路；聖索菲亞整修（TV3）</span></td></tr>
+    <tr><td>約 15:00–16:30</td><td>地下水宮＋下午茶。<span class="job">光影、柱子（L1）、下午茶（S1）</span></td></tr>
+    <tr><td>17:36 後</td><td><span class="sun">☀ 日落 17:36</span>；建議補拍<b>藍色清真寺夜景</b>。晚餐當地餐廳</td></tr>
+
+    <tr class="hd"><td colspan="2">12/13（日）伊斯坦堡<span>早餐飯店（遊船早餐）・午餐小吃・晚餐當地餐廳</span></td></tr>
+    <tr><td>約 08:30–10:30</td><td>海峽遊船土耳其式早餐（2 小時）。<span class="sun">☀ 日出 08:20</span>，晨光好。<span class="job">L3：豐盛早餐、歐亞兩岸、記者出鏡；渡輪＝低碳交通（W2）</span></td></tr>
+    <tr><td>約 11:00</td><td>蘇萊曼清真寺。<span class="job">俯瞰金角灣全景</span></td></tr>
+    <tr><td>約 12:30</td><td>有頂大市集（小吃）。<span class="alert">週日可能不開 → 改街頭小吃或其他市集</span>　<span class="job">價格、攤商受訪（TV3、W1）</span></td></tr>
+    <tr><td>約 14:00</td><td>古驛站建築巡禮。<span class="job">S3</span></td></tr>
+    <tr><td>約 15:30</td><td>水菸館體驗<span class="note">（台灣播出要注意菸害規範）</span></td></tr>
+    <tr><td>約 16:30</td><td>冬季特色飲品。<span class="job">Salep 熱蘭莖奶、Boza 發酵飲（S1）</span>；Boza 名店在蘇萊曼清真寺附近</td></tr>
+    <tr><td>晚上</td><td>當地餐廳；備份、充電</td></tr>
+
+    <tr class="hd"><td colspan="2">12/14（一）伊斯坦堡<span>早餐飯店・午餐小吃・晚餐當地餐廳</span></td></tr>
+    <tr><td>約 09:30</td><td>Tünel（卡拉柯伊站 → 貝伊奧盧站）。<span class="job">車廂、月台、1875 年、票價（L3）</span></td></tr>
+    <tr><td>約 10:15</td><td>加拉達塔外觀</td></tr>
+    <tr><td>約 11:00–13:30</td><td>獨立大街、塔克辛，小吃當午餐。<span class="job">懷舊紅電車、人潮（S3）；物價（W1）</span>　<b>注意扒手</b></td></tr>
+    <tr><td>約 14:00–15:30</td><td>吉漢吉爾骨董街區。<span class="job">S2：老店、店家受訪</span></td></tr>
+    <tr><td>約 15:30–17:37</td><td>卡拉科伊文青街區。<span class="job">S2：咖啡店、街頭藝術</span>　<span class="sun">☀ 日落 17:37</span></td></tr>
+    <tr><td>晚上</td><td><b>對照隨身手冊第 4 頁的交付表，列出明天要補拍什麼</b></td></tr>
+
+    <tr class="hd"><td colspan="2">12/15（二）伊斯坦堡 → 台北<span>早餐飯店・午餐當地餐廳・晚餐機上</span></td></tr>
+    <tr><td>約 08:00</td><td>早餐、退房，行李寄放飯店</td></tr>
+    <tr><td>約 09:30–11:00</td><td>土耳其咖啡＆現代文青咖啡。<span class="job">煮咖啡、咖啡占卜（S1）</span></td></tr>
+    <tr><td>約 11:00–13:00</td><td><b>彈性時間＝補拍</b>＋午餐</td></tr>
+    <tr><td>13:30–14:00</td><td><b>最晚這時出發往機場</b>（車程 45–75 分鐘）</td></tr>
+    <tr><td>14:15 前</td><td>抵機場報到。上機前<b>素材備份兩份</b>，分開放</td></tr>
+    <tr><td>17:15</td><td>TK124 起飛</td></tr>
+
+    <tr class="hd"><td colspan="2">12/16（三）08:45 抵桃園<span>辦完入境，交素材、交拍攝紀錄</span></td></tr>
+  </table>
+  <div class="foot">第 5 頁 / 共 7 頁</div>
+</section>
+
+<!-- ===== 第 6 頁：飲食 ===== -->
+<section class="page">
+  <h2 style="margin-top:0">吃什麼：各站在地飲食</h2>
+  <p class="note" style="margin:0 0 4px">土耳其文可以直接指給店家看。標籤＝適合用在哪一支影片。</p>
+  <div class="grid2">
+    <div>
+      <h3>卡帕多奇亞・安納托利亞高原（12/9–12/11）</h3>
+      <table class="food">
+        <tr><th>中文</th><th>土耳其文</th><th>是什麼</th></tr>
+        <tr><td>陶罐燉肉</td><td>Testi Kebabı</td><td>肉和蔬菜在陶罐裡燉，<b>上桌當面敲破陶罐</b>，畫面最好 <span class="tag st">S1</span></td></tr>
+        <tr><td>土耳其小餃子</td><td>Mantı</td><td>迷你餃子，淋優格醬和辣椒奶油 <span class="tag st">S1</span></td></tr>
+        <tr><td>手擀薄餅</td><td>Gözleme</td><td>農家現場擀麵、鐵板煎，包起司或菠菜 <span class="tag tv">TV1</span></td></tr>
+        <tr><td>船形披薩</td><td>Pide</td><td>長條餅皮，放絞肉、起司、蛋</td></tr>
+        <tr><td>白豆燉菜</td><td>Kuru Fasulye</td><td>家常菜，配米飯</td></tr>
+        <tr><td>葡萄糖漿</td><td>Pekmez</td><td>濃縮葡萄汁，早餐沾麵包，在地農產</td></tr>
+        <tr><td>杏桃乾</td><td>Kuru Kayısı</td><td>土耳其名產，市集常見</td></tr>
+        <tr><td>在地葡萄酒</td><td>Emir／Öküzgözü／Boğazkere</td><td>原生葡萄品種：Emir 白酒，後兩種紅酒</td></tr>
+      </table>
+
+      <h3>安卡拉（12/9 中午在病童中心用餐）</h3>
+      <p style="margin:0">安卡拉的時間只有半天，午餐在 LÖSEV。可以留意基金會自己的<b>商店、咖啡廳和手工產品</b>，這本身就是 TV2 的社會企業素材。</p>
+
+      <h3>飲料（全國）</h3>
+      <table class="food">
+        <tr><td>土耳其紅茶</td><td>Çay</td><td>鬱金香形玻璃杯，到處都喝得到</td></tr>
+        <tr><td>土耳其咖啡</td><td>Türk Kahvesi</td><td>小杯、有咖啡渣，喝完可以「咖啡占卜」 <span class="tag st">S1</span></td></tr>
+        <tr><td>鹹優格飲</td><td>Ayran</td><td>配烤肉最常見</td></tr>
+        <tr><td>熱蘭莖奶</td><td>Salep</td><td>冬季限定，熱熱甜甜撒肉桂 <span class="tag st">S1</span></td></tr>
+        <tr><td>發酵小米飲</td><td>Boza</td><td>冬季限定，酸甜濃稠撒肉桂和鷹嘴豆 <span class="tag st">S1</span></td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>伊斯坦堡（12/12–12/15）</h3>
+      <table class="food">
+        <tr><th>中文</th><th>土耳其文</th><th>是什麼</th></tr>
+        <tr><td>土耳其早餐</td><td>Kahvaltı</td><td>起司、橄欖、番茄小黃瓜、蜂蜜配奶油、蛋，一大桌 <span class="tag lg">L3</span></td></tr>
+        <tr><td>番茄炒蛋</td><td>Menemen</td><td>早餐常見，鐵鍋上桌</td></tr>
+        <tr><td>芝麻圈</td><td>Simit</td><td>街頭紅色推車賣，最便宜的早餐 <span class="tag wr">W1</span></td></tr>
+        <tr><td>烤魚三明治</td><td>Balık Ekmek</td><td>碼頭邊的招牌小吃 <span class="tag st">S1</span></td></tr>
+        <tr><td>鑲米淡菜</td><td>Midye Dolma</td><td>路邊攤，擠檸檬吃（腸胃敏感的少吃）</td></tr>
+        <tr><td>烤栗子</td><td>Kestane</td><td>冬天街頭的味道和畫面</td></tr>
+        <tr><td>旋轉烤肉</td><td>Döner</td><td>捲餅或夾麵包</td></tr>
+        <tr><td>優格烤肉</td><td>İskender</td><td>烤肉片、麵包、番茄醬、優格、熱奶油</td></tr>
+        <tr><td>土耳其薄餅</td><td>Lahmacun</td><td>薄餅放絞肉，捲生菜吃</td></tr>
+        <tr><td>果仁蜜餅</td><td>Baklava</td><td>多層酥皮＋開心果＋糖漿</td></tr>
+        <tr><td>起司甜點</td><td>Künefe</td><td>熱熱牽絲的起司甜點</td></tr>
+        <tr><td>土耳其軟糖</td><td>Lokum</td><td>伴手禮，市集很多</td></tr>
+      </table>
+
+      <div class="box warm" style="margin-top:6px">
+        <b>吃飯要知道</b>
+        <ul>
+          <li>土耳其以穆斯林為主，<b>一般餐廳沒有豬肉</b></li>
+          <li>自來水不建議直接喝，<b>喝瓶裝水</b></li>
+          <li>餐廳多數有酒，但價格偏高</li>
+          <li>麵包通常免費、可續；有些餐廳另收服務費，沒收的話小費約 5–10%</li>
+          <li>土耳其菜偏鹹、偏油，腸胃敏感帶腸胃藥</li>
+          <li><b>拍餐廳、攤販前先問</b>：「Çekim yapabilir miyim?」（可以拍嗎？）</li>
+          <li>菜單價格是新聞素材：<b>拍下菜單和收據</b>，記下當天匯率</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot">第 6 頁 / 共 7 頁</div>
+</section>
+
+<!-- ===== 第 7 頁：穿著、器材、生活 ===== -->
+<section class="page">
+  <h2 style="margin-top:0">穿什麼、器材怎麼保護、生活實用</h2>
+  <div class="grid2">
+    <div>
+      <h3>穿著（洋蔥式）</h3>
+      <ul>
+        <li>發熱衣 → 刷毛或羽絨內層 → <b>防風防水外套</b></li>
+        <li>毛帽、圍巾、<b>能操作相機的觸控手套</b>，外面再套一雙保暖手套</li>
+        <li><b>防水防滑的鞋</b>：卡帕多奇亞可能有雪和冰，伊斯坦堡石板路下雨很滑</li>
+        <li>暖暖包：除了貼身，也可以<b>貼在電池旁邊</b></li>
+        <li>高原乾燥：護唇膏、乳液；飯店暖氣乾，喝多一點水</li>
+        <li>清真寺：女性要頭巾、遮住手臂和腿；男性不穿短褲</li>
+      </ul>
+
+      <h3>器材防寒防雨</h3>
+      <ul>
+        <li><b>結露</b>：從寒冷戶外進溫暖室內，相機先留在包裡或密封袋裡 30–60 分鐘回溫，再拿出來</li>
+        <li>低溫時電池掉得很快：備用電池放<b>貼身口袋</b>，輪流使用</li>
+        <li>每天晚上全部充電：帶<b>多孔充電座＋歐規轉接頭</b></li>
+        <li>伊斯坦堡多雨：機身防雨罩、毛巾、乾燥包</li>
+        <li>地下城、地下水宮很暗：補光燈、高感光度、穩定器</li>
+        <li>熱氣球上：只帶輕便器材，<b>不換鏡頭、不帶腳架</b></li>
+        <li>清真寺、博物館常<b>禁止架腳架</b>，準備手持拍法</li>
+      </ul>
+
+      <h3>實用土耳其語（照念的中文為近似音）</h3>
+      <table>
+        <tr><td>你好</td><td><i>Merhaba</i>（梅爾哈巴）</td></tr>
+        <tr><td>謝謝</td><td><i>Teşekkür ederim</i>（貼謝庫爾 艾德林）</td></tr>
+        <tr><td>多少錢？</td><td><i>Ne kadar?</i>（內 卡達爾）</td></tr>
+        <tr><td>可以拍嗎？</td><td><i>Çekim yapabilir miyim?</i>（切金 亞帕比利爾 米應）</td></tr>
+        <tr><td>我是台灣記者</td><td><i>Tayvanlı gazeteciyim</i>（泰萬勒 加澤特吉音）</td></tr>
+        <tr><td>很好吃</td><td><i>Çok lezzetli</i>（丘克 雷澤特利）</td></tr>
+        <tr><td>買單</td><td><i>Hesap lütfen</i>（黑薩普 呂特芬）</td></tr>
+        <tr><td>廁所在哪？</td><td><i>Tuvalet nerede?</i>（圖瓦雷特 內雷德）</td></tr>
+        <tr><td>好／沒問題</td><td><i>Tamam</i>（塔滿）</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>錢、網路、電</h3>
+      <ul>
+        <li><b>貨幣：土耳其里拉（TRY）</b>。通膨高、匯率變動快，出發前查最新匯率</li>
+        <li>信用卡很普及；<b>市集、小吃、廁所、小費要現金</b>，帶小面額</li>
+        <li>換錢：市區換匯所（Döviz）通常比機場划算；機場只換少量</li>
+        <li><b>網路</b>：出發前買 eSIM，或在機場買當地電信 SIM 卡（Turkcell、Vodafone、Türk Telekom）</li>
+        <li><b>插座：雙圓孔（C／F 型）、220–230V</b>。看變壓器上寫 100–240V 就能直接用；只能用 110V 的電器不能插</li>
+      </ul>
+
+      <h3>交通</h3>
+      <ul>
+        <li>伊斯坦堡的 Tünel、電車、渡輪、地鐵都用<b>伊斯坦堡卡（Istanbulkart）</b>，車站機器可以買和儲值</li>
+        <li>計程車：用叫車 App 比較安心，上車確認跳表</li>
+        <li>團體行程大多有包車，<b>器材不要離開視線</b></li>
+      </ul>
+
+      <h3>安全與拍攝禁忌</h3>
+      <ul>
+        <li><b>扒手</b>：獨立大街、大市集、人潮多的地方，包包背前面</li>
+        <li><b>常見騙局</b>：擦鞋匠故意掉刷子、陌生人熱情邀你去酒吧、強迫推銷地毯和寶石</li>
+        <li><b>不要拍</b>：軍人、警察、軍事設施、政府建築；機場內不要架設器材</li>
+        <li>遇到示威抗議就遠離；警察要求停拍就立刻停</li>
+        <li>不談敏感政治，尊重國父凱末爾（Atatürk）</li>
+        <li><b>空拍機：沒有許可一律不飛</b></li>
+      </ul>
+
+      <h3>緊急與健康</h3>
+      <ul>
+        <li><b>土耳其緊急電話：112</b>（警察、救護、消防都撥這個）</li>
+        <li>駐土耳其台北經濟文化代表團（安卡拉）：<span style="display:inline-block;border-bottom:1px solid #888;min-width:110px"></span>（出發前查好抄上）</li>
+        <li>外交部急難救助專線：出發前到外交部領事事務局網站確認土耳其適用的號碼</li>
+        <li>雄獅領隊：<span style="display:inline-block;border-bottom:1px solid #888;min-width:110px"></span></li>
+        <li>帶：感冒藥、腸胃藥、止痛藥、個人常用藥、口罩</li>
+        <li>時差 5 小時：12/9 最累，能睡就睡</li>
+      </ul>
+      <div class="box warn" style="margin-top:5px">
+        <b>證件包隨身</b>：護照（效期建議 6 個月以上）、簽證／記者證件、公司英文採訪公函、護照影本、保險資料、器材清單
+      </div>
+    </div>
+  </div>
+  <div class="foot">第 7 頁 / 共 7 頁｜天氣為歷年約略平均、日出日落依座標計算；出發前一週請再看實際預報</div>
+</section>
+
+</body>
+</html>
